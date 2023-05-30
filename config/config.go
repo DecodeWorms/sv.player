@@ -1,4 +1,4 @@
-package condig
+package config
 
 import (
 	"os"
@@ -7,14 +7,22 @@ import (
 
 // declare a constant for db config and server config
 const (
-	DatabaseName = "SOCCER_METRICS"
-	DatabaseUrl  = "DATABASE_URL"
+	DatabaseName         = "SOCCER_METRICS"
+	DatabaseUrl          = "DATABASE_URL"
+	DatabaseHost         = "DATABASE_HOST"
+	PostgresDatabaseName = "DATABASE_NAME"
+	DatabaseUserName     = "DATABASE_USER_NAME"
+	DatabasePort         = "DATABASE_PORT"
 )
 
 // Config holds fields for configuration
 type Config struct {
-	DatabaseName string
-	DatabaseUrl  string
+	DatabaseName         string
+	DatabaseUrl          string
+	DatabaseHost         string
+	PostgresDatabaseName string
+	DatabaseUserName     string
+	DatabasePort         string
 }
 
 func (c Config) GetEnv(key, fallback string) string {
@@ -52,8 +60,16 @@ func (c Config) GetEnvInt(key string, fallback int) int {
 func ImportConfig(c Config) *Config {
 	databaseName := c.GetEnv(DatabaseName, "soccermetrics")
 	databaseUrl := c.GetEnv(DatabaseUrl, "mongodb://127.0.0.1:27017")
+	databaseHost := c.GetEnv(DatabaseHost, "localhost")
+	postgresDatabaseName := c.GetEnv(DatabaseName, "soccermetrics")
+	databasePort := c.GetEnv(DatabasePort, "5432")
+	databaseUserName := c.GetEnv(DatabaseUserName, "abdulhmeed")
 	return &Config{
-		DatabaseName: databaseName,
-		DatabaseUrl:  databaseUrl,
+		DatabaseName:         databaseName,
+		DatabaseUrl:          databaseUrl,
+		DatabaseHost:         databaseHost,
+		PostgresDatabaseName: postgresDatabaseName,
+		DatabaseUserName:     databaseUserName,
+		DatabasePort:         databasePort,
 	}
 }
