@@ -137,7 +137,7 @@ func (mr *MockDataStoreMockRecorder) GetPlayerWithFieldsInfoById(id interface{})
 }
 
 // UpdatePlayer mocks base method.
-func (m *MockDataStore) UpdatePlayer(id string, data models.PersonalInfo) error {
+func (m *MockDataStore) UpdatePlayer(id string, data *models.PersonalInfo) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdatePlayer", id, data)
 	ret0, _ := ret[0].(error)
@@ -151,12 +151,11 @@ func (mr *MockDataStoreMockRecorder) UpdatePlayer(id, data interface{}) *gomock.
 }
 
 // UpdatePlayerWithFieldsInfo mocks base method.
-func (m *MockDataStore) UpdatePlayerWithFieldsInfo(id string, data models.FieldInfo) (*models.FieldInfo, error) {
+func (m *MockDataStore) UpdatePlayerWithFieldsInfo(id string, data *models.FieldInfo) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdatePlayerWithFieldsInfo", id, data)
-	ret0, _ := ret[0].(*models.FieldInfo)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // UpdatePlayerWithFieldsInfo indicates an expected call of UpdatePlayerWithFieldsInfo.
@@ -291,7 +290,7 @@ func (mr *MockPlayerStoreMockRecorder) GetPlayerWithFieldsInfoById(id interface{
 }
 
 // UpdatePlayer mocks base method.
-func (m *MockPlayerStore) UpdatePlayer(id string, data models.PersonalInfo) error {
+func (m *MockPlayerStore) UpdatePlayer(id string, data *models.PersonalInfo) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdatePlayer", id, data)
 	ret0, _ := ret[0].(error)
@@ -305,12 +304,11 @@ func (mr *MockPlayerStoreMockRecorder) UpdatePlayer(id, data interface{}) *gomoc
 }
 
 // UpdatePlayerWithFieldsInfo mocks base method.
-func (m *MockPlayerStore) UpdatePlayerWithFieldsInfo(id string, data models.FieldInfo) (*models.FieldInfo, error) {
+func (m *MockPlayerStore) UpdatePlayerWithFieldsInfo(id string, data *models.FieldInfo) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdatePlayerWithFieldsInfo", id, data)
-	ret0, _ := ret[0].(*models.FieldInfo)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // UpdatePlayerWithFieldsInfo indicates an expected call of UpdatePlayerWithFieldsInfo.
