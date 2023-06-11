@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/DecodeWorms/messaging-protocol v0.0.0-20230608214326-7f4cf93c5233
-	github.com/DecodeWorms/server-contract v0.0.0-20230609101540-e6bf3a281658
+	github.com/DecodeWorms/server-contract v0.0.0-20230611151818-8625cf3a6829
 	github.com/golang/mock v1.6.0
 	gorm.io/driver/postgres v1.5.2
 	gorm.io/gorm v1.25.1

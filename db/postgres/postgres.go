@@ -45,6 +45,18 @@ func (p PostgresStore) AutoMigrateFieldInfo() error {
 	return err
 }
 
+func (p PostgresStore) AutoMigrateAddressInfo() error {
+	add := models.Address{}
+	err := p.db.AutoMigrate(&add)
+	return err
+}
+
+func (p PostgresStore) AutoMigrateClubsPreviouslyPlazed() error {
+	clubs := models.ClubsHePreviouslyPlayed{}
+	err := p.db.AutoMigrate(&clubs)
+	return err
+}
+
 func (p PostgresStore) CreatePlayer(data models.PersonalInfo) error {
 	data.CreatedAt = time.Now()
 	err := p.db.Create(&models.PersonalInfo{
