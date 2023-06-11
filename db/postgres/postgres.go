@@ -3,6 +3,7 @@ package postgres
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/DecodeWorms/server-contract/models"
 	"github.com/DecodeWorms/sv.player/db"
@@ -15,23 +16,37 @@ var _ db.DataStore = &PostgresStore{}
 type PostgresStore struct {
 	db *gorm.DB
 	//add the logger
-	//add the
 }
 
 func New(host, user, name, port string) (*PostgresStore, error) {
 	log.Println("Connecting to the DB...")
+
 	uri := fmt.Sprintf("host=%s user=%s dbname=%s port=%s", host, user, name, port)
 	database, err := gorm.Open(postgres.Open(uri), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
+
 	log.Println("Connected to the Db..")
 	return &PostgresStore{
 		db: database,
 	}, nil
 }
 
+func (p PostgresStore) AutoMigratePersonalInfo() error {
+	per := models.PersonalInfo{}
+	err := p.db.AutoMigrate(&per)
+	return err
+}
+
+func (p PostgresStore) AutoMigrateFieldInfo() error {
+	field := models.FieldInfo{}
+	err := p.db.AutoMigrate(&field)
+	return err
+}
+
 func (p PostgresStore) CreatePlayer(data models.PersonalInfo) error {
+	data.CreatedAt = time.Now()
 	err := p.db.Create(&models.PersonalInfo{
 		Id:            data.Id,
 		FirstName:     data.FirstName,
@@ -62,6 +77,7 @@ func (p PostgresStore) GetPlayerByPhoneNumber(phoneNumber string) (*models.Perso
 }
 
 func (p PostgresStore) UpdatePlayer(id string, data *models.PersonalInfo) error {
+	data.UpdatedAt = time.Now()
 	var old = &models.PersonalInfo{}
 	_ = p.db.Where("id = ?", id).First(old).Error
 	d := buildPlayerPayload(old, data)
@@ -70,16 +86,15 @@ func (p PostgresStore) UpdatePlayer(id string, data *models.PersonalInfo) error 
 }
 
 func (p PostgresStore) CreatePlayerWithFieldsData(data models.FieldInfo) error {
+	data.CreatedAt = time.Now()
 	err := p.db.Create(&models.FieldInfo{
-		Id:                      data.Id,
-		PlayerId:                data.PlayerId,
-		YearOfExperience:        data.YearOfExperience,
-		NumberOfGoalsScored:     data.NumberOfGoalsScored,
-		ClubsHePreviouslyPlayed: data.ClubsHePreviouslyPlayed,
-		JerseyNumber:            data.JerseyNumber,
-		YearJoined:              data.YearJoined,
-		PositionOnTheField:      data.PositionOnTheField,
-		PlayerClubStatus:        data.PlayerClubStatus,
+		PersonalInfoId:      data.PersonalInfoId,
+		YearOfExperience:    data.YearOfExperience,
+		NumberOfGoalsScored: data.NumberOfGoalsScored,
+		JerseyNumber:        data.JerseyNumber,
+		YearJoined:          data.YearJoined,
+		PositionOnTheField:  data.PositionOnTheField,
+		PlayerClubStatus:    data.PlayerClubStatus,
 	}).Error
 	return err
 }
@@ -92,6 +107,8 @@ func (p PostgresStore) GetPlayer(jerseyNumber string) (*models.FieldInfo, error)
 }
 
 func (p PostgresStore) UpdatePlayerWithFieldsInfo(id string, data *models.FieldInfo) error {
+	data.CreatedAt = time.Now()
+
 	var old = &models.FieldInfo{}
 	_ = p.db.Where("id = ?", id).First(old).Error
 	d := buildPlayerWithFieldPayload(old, data)
@@ -145,9 +162,6 @@ func buildPlayerPayload(old, new *models.PersonalInfo) *models.PersonalInfo {
 func buildPlayerWithFieldPayload(old, new *models.FieldInfo) *models.FieldInfo {
 	if new == nil {
 		return nil
-	}
-	if len(new.ClubsHePreviouslyPlayed) != 0 {
-		old.ClubsHePreviouslyPlayed = new.ClubsHePreviouslyPlayed
 	}
 	if new.JerseyNumber != 0 {
 		old.JerseyNumber = new.JerseyNumber

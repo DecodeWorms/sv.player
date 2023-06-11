@@ -13,6 +13,8 @@ const (
 	PostgresDatabaseName = "DATABASE_NAME"
 	DatabaseUserName     = "DATABASE_USER_NAME"
 	DatabasePort         = "DATABASE_PORT"
+	PulsarUrl            = "PULSAR_URL"
+	PulsarServiceName    = "PULSAR_SERVICE_NAME"
 )
 
 // Config holds fields for configuration
@@ -23,6 +25,8 @@ type Config struct {
 	PostgresDatabaseName string
 	DatabaseUserName     string
 	DatabasePort         string
+	PulsarUrl            string
+	PulsarServiceName    string
 }
 
 func (c Config) GetEnv(key, fallback string) string {
@@ -64,6 +68,7 @@ func ImportConfig(c Config) *Config {
 	postgresDatabaseName := c.GetEnv(DatabaseName, "soccermetrics")
 	databasePort := c.GetEnv(DatabasePort, "5432")
 	databaseUserName := c.GetEnv(DatabaseUserName, "abdulhmeed")
+	pulsarUrl := c.GetEnv(PulsarUrl, "pulsar://localhost:6650")
 	return &Config{
 		DatabaseName:         databaseName,
 		DatabaseUrl:          databaseUrl,
@@ -71,5 +76,6 @@ func ImportConfig(c Config) *Config {
 		PostgresDatabaseName: postgresDatabaseName,
 		DatabaseUserName:     databaseUserName,
 		DatabasePort:         databasePort,
+		PulsarUrl:            pulsarUrl,
 	}
 }
