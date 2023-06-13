@@ -12,7 +12,7 @@ const (
 	Host     = "localhost"
 	User     = "runner" //user = "abdulhmeed"
 	Password = "password"
-	Dbname   = "soccermetrics"
+	Dbname   = "services"
 	port     = "5432"
 )
 
