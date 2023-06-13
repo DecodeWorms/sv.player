@@ -30,6 +30,7 @@ func main() {
 		log.Println(err)
 		return
 	}
+	//migrate the database tables to the Postgres Server
 	h.CreateTableMigration()
 
 }
