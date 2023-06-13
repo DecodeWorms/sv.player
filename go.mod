@@ -3,8 +3,7 @@ module github.com/DecodeWorms/sv.player
 go 1.20
 
 require (
-	github.com/DecodeWorms/messaging-protocol v0.0.0-20230608214326-7f4cf93c5233
-	github.com/DecodeWorms/server-contract v0.0.0-20230609101540-e6bf3a281658
+	github.com/DecodeWorms/server-contract v0.0.0-20230611151818-8625cf3a6829
 	github.com/golang/mock v1.6.0
 	gorm.io/driver/postgres v1.5.2
 	gorm.io/gorm v1.25.1
@@ -15,6 +14,7 @@ require (
 	github.com/99designs/keyring v1.2.1 // indirect
 	github.com/AthenZ/athenz v1.10.39 // indirect
 	github.com/DataDog/zstd v1.5.0 // indirect
+	github.com/DecodeWorms/messaging-protocol v0.0.0-20230608213446-003255bf8948 // indirect
 	github.com/apache/pulsar-client-go v0.10.0 // indirect
 	github.com/ardielle/ardielle-go v1.5.2 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -42,9 +42,9 @@ require (
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.32.1 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
-	github.com/rogpeppe/go-internal v1.10.0 // indirect
 	github.com/sirupsen/logrus v1.9.2 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
+	github.com/stretchr/testify v1.8.4 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/crypto v0.8.0 // indirect
 	golang.org/x/mod v0.10.0 // indirect
