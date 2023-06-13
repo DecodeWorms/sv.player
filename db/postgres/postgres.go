@@ -1,4 +1,4 @@
-package postgres
+package db
 
 import (
 	"fmt"
@@ -18,10 +18,10 @@ type PostgresStore struct {
 	//add the logger
 }
 
-func New(host, user, name, port string) (*PostgresStore, error) {
+func New(host, user, name, port, password string) (*PostgresStore, error) {
 	log.Println("Connecting to the DB...")
 
-	uri := fmt.Sprintf("host=%s user=%s dbname=%s port=%s", host, user, name, port)
+	uri := fmt.Sprintf("host=%s user=%s dbname=%s port=%s password=%s", host, user, name, port, password)
 	database, err := gorm.Open(postgres.Open(uri), &gorm.Config{})
 	if err != nil {
 		return nil, err
@@ -66,11 +66,6 @@ func (p PostgresStore) CreatePlayer(data models.PersonalInfo) error {
 		MaritalStatus: data.MaritalStatus,
 		Email:         data.Email,
 		PhoneNumber:   data.PhoneNumber,
-		Address: models.Address{
-			Name:    data.Address.Name,
-			City:    data.Address.City,
-			ZipCode: data.Address.ZipCode,
-		},
 	}).Error
 	return err
 }
