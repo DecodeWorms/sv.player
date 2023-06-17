@@ -3,7 +3,7 @@ module github.com/DecodeWorms/sv.player
 go 1.20
 
 require (
-	github.com/DecodeWorms/server-contract v0.0.0-20230611151818-8625cf3a6829
+	github.com/DecodeWorms/server-contract v0.0.0-20230617175631-6d611684772a
 	github.com/golang/mock v1.6.0
 	gorm.io/driver/postgres v1.5.2
 	gorm.io/gorm v1.25.1
