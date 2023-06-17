@@ -10,9 +10,9 @@ import (
 
 const (
 	Host     = "localhost"
-	User     = "abdulhmeed" //user = "abdulhmeed"
+	User     = "runner" //user = "abdulhmeed"
 	Password = "password"
-	Dbname   = "soccermetrics" //soccermetrics
+	Dbname   = "services" //soccermetrics
 	port     = "5432"
 )
 
