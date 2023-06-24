@@ -1,4 +1,4 @@
-package postgres
+package db
 
 import (
 	"fmt"
@@ -18,10 +18,10 @@ type PostgresStore struct {
 	//add the logger
 }
 
-func New(host, user, name, port string) (*PostgresStore, error) {
+func New(host, user, name, port, password string) (*PostgresStore, error) {
 	log.Println("Connecting to the DB...")
 
-	uri := fmt.Sprintf("host=%s user=%s dbname=%s port=%s", host, user, name, port)
+	uri := fmt.Sprintf("host=%s user=%s dbname=%s port=%s password=%s", host, user, name, port, password)
 	database, err := gorm.Open(postgres.Open(uri), &gorm.Config{})
 	if err != nil {
 		return nil, err
@@ -66,11 +66,6 @@ func (p PostgresStore) CreatePlayer(data models.PersonalInfo) error {
 		MaritalStatus: data.MaritalStatus,
 		Email:         data.Email,
 		PhoneNumber:   data.PhoneNumber,
-		Address: models.Address{
-			Name:    data.Address.Name,
-			City:    data.Address.City,
-			ZipCode: data.Address.ZipCode,
-		},
 	}).Error
 	return err
 }
@@ -118,23 +113,24 @@ func (p PostgresStore) GetPlayer(jerseyNumber string) (*models.FieldInfo, error)
 }
 
 func (p PostgresStore) UpdatePlayerWithFieldsInfo(id string, data *models.FieldInfo) error {
-	data.CreatedAt = time.Now()
+	data.UpdatedAt = time.Now()
 
 	var old = &models.FieldInfo{}
-	_ = p.db.Where("id = ?", id).First(old).Error
+	_ = p.db.Where("personal_info_id = ?", id).First(old).Error
 	d := buildPlayerWithFieldPayload(old, data)
-	err := p.db.Model(&models.FieldInfo{}).Where("id = ?", id).Updates(d).Error
+	err := p.db.Model(&models.FieldInfo{}).Where("personal_info_id = ?", id).Updates(d).Error
 	return err
 }
 func (p PostgresStore) GetPlayerWithFieldsInfoById(id string) (*models.FieldInfo, error) {
 	var playerWithField = &models.FieldInfo{}
-	err := p.db.Where("id = ?", id).First(playerWithField).Error
+	err := p.db.Where("personal_info_id = ?", id).First(playerWithField).Error
 	return playerWithField, err
 
 }
 
 func (p PostgresStore) DeletePlayer(id string) error {
-	err := p.db.Where("id = ?", id).Delete(models.FieldInfo{}).Error
+	player := models.FieldInfo{}
+	err := p.db.Where("personal_info_id = ?", id).Find(&player).Delete(&models.FieldInfo{}).Error
 	return err
 }
 

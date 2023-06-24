@@ -6,13 +6,13 @@ import (
 	store "github.com/DecodeWorms/messaging-protocol"
 	pr "github.com/DecodeWorms/messaging-protocol/pulse"
 	"github.com/DecodeWorms/sv.player/config"
-	"github.com/DecodeWorms/sv.player/db/postgres"
+	db "github.com/DecodeWorms/sv.player/db/postgres"
 	"github.com/DecodeWorms/sv.player/server"
 )
 
 func main() {
 	cfg := config.ImportConfig(config.Config{})
-	serv, err := postgres.New(cfg.DatabaseHost, cfg.DatabaseUserName, cfg.DatabaseName, cfg.DatabasePort)
+	serv, err := db.New(cfg.DatabaseHost, cfg.DatabaseUserName, cfg.DatabaseName, cfg.DatabasePort, cfg.DatabasePassword)
 	if err != nil {
 		log.Println(err)
 		return

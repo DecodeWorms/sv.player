@@ -2,16 +2,16 @@ package server
 
 import (
 	pr "github.com/DecodeWorms/messaging-protocol"
-	"github.com/DecodeWorms/sv.player/db/postgres"
+	db "github.com/DecodeWorms/sv.player/db/postgres"
 )
 
 type PlayerHandler struct {
-	playerService postgres.PostgresStore
+	playerService db.PostgresStore
 	store         pr.PulsarStore
 	//add the logger
 }
 
-func New(p postgres.PostgresStore) (PlayerHandler, error) {
+func New(p db.PostgresStore) (PlayerHandler, error) {
 	return PlayerHandler{
 		playerService: p,
 	}, nil
