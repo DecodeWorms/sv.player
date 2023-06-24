@@ -113,23 +113,24 @@ func (p PostgresStore) GetPlayer(jerseyNumber string) (*models.FieldInfo, error)
 }
 
 func (p PostgresStore) UpdatePlayerWithFieldsInfo(id string, data *models.FieldInfo) error {
-	data.CreatedAt = time.Now()
+	data.UpdatedAt = time.Now()
 
 	var old = &models.FieldInfo{}
-	_ = p.db.Where("id = ?", id).First(old).Error
+	_ = p.db.Where("personal_info_id = ?", id).First(old).Error
 	d := buildPlayerWithFieldPayload(old, data)
-	err := p.db.Model(&models.FieldInfo{}).Where("id = ?", id).Updates(d).Error
+	err := p.db.Model(&models.FieldInfo{}).Where("personal_info_id = ?", id).Updates(d).Error
 	return err
 }
 func (p PostgresStore) GetPlayerWithFieldsInfoById(id string) (*models.FieldInfo, error) {
 	var playerWithField = &models.FieldInfo{}
-	err := p.db.Where("id = ?", id).First(playerWithField).Error
+	err := p.db.Where("personal_info_id = ?", id).First(playerWithField).Error
 	return playerWithField, err
 
 }
 
 func (p PostgresStore) DeletePlayer(id string) error {
-	err := p.db.Where("id = ?", id).Delete(models.FieldInfo{}).Error
+	player := models.FieldInfo{}
+	err := p.db.Where("personal_info_id = ?", id).Find(&player).Delete(&models.FieldInfo{}).Error
 	return err
 }
 
