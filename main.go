@@ -31,6 +31,8 @@ func main() {
 		return
 	}
 	//migrate the database tables to the Postgres Server
-	h.CreateTableMigration()
+	if err = h.CreateTableMigration(); err != nil {
+		log.Println("error migrating database tables")
+	}
 
 }
