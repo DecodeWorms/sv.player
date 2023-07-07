@@ -25,14 +25,15 @@ func main() {
 		return
 	}
 
-	h, err := server.New(*serv)
+	_, err = server.New(*serv)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	//migrate the database tables to the Postgres Server
+	/*migrate the database tables to the Postgres Server
 	if err = h.CreateTableMigration(); err != nil {
 		log.Println("error migrating database tables")
 	}
+	*/
 
 }
