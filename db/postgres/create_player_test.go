@@ -29,10 +29,11 @@ func TestCreatePlayer(t *testing.T) {
 
 	//Persist Data to the db..
 	playerRecord := models.PersonalInfo{
-		Id:        "user-id-1234-dan",
-		FirstName: "Danny",
-		LastName:  "Ryan",
-		Gender:    "male",
+		Id:            "user-id-1234-fati",
+		FirstName:     "Fatimah",
+		LastName:      "Abdulhameed",
+		Gender:        "female",
+		MaritalStatus: "married",
 	}
 
 	if err = db.CreatePlayer(playerRecord); err != nil {

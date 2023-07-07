@@ -7,18 +7,19 @@ import (
 
 	//pr "github.com/DecodeWorms/messaging-protocol"
 	"github.com/DecodeWorms/server-contract/models"
-	db "github.com/DecodeWorms/sv.player/db/postgres"
+	data "github.com/DecodeWorms/sv.player/db"
 	"github.com/DecodeWorms/sv.player/pb/protos/pb/player"
 	"google.golang.org/grpc"
 )
 
 type PlayerHandler struct {
-	playerService db.PostgresStore
+	playerService data.PlayerStore
+	//playerService db.PostgresStore
 	//store         pr.PulsarStore
 	//add the logger
 }
 
-func New(p db.PostgresStore) (PlayerHandler, error) {
+func New(p data.PlayerStore) (PlayerHandler, error) {
 	return PlayerHandler{
 		playerService: p,
 	}, nil
@@ -165,7 +166,7 @@ func (p PlayerHandler) UpdateAddress(ctx context.Context, in *player.UpdateAddre
 	return nil, nil
 }
 
-func (p PlayerHandler) CreateTableMigration() error {
+/*func (p PlayerHandler) CreateTableMigration() error {
 	//create table for players personal info
 	err := p.playerService.AutoMigratePersonalInfo()
 	if err != nil {
@@ -182,6 +183,7 @@ func (p PlayerHandler) CreateTableMigration() error {
 	}
 	return nil
 }
+*/
 
 func generatePlayerId(length int) string {
 
