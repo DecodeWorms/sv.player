@@ -22,10 +22,8 @@ message Address{
 }
 
 message CreatePlayerFieldRequest{
-  string id =1;
   string player_id =2;
   string year_of_experience =3;
-  int32 number_of_goals =4;
   repeated string previous_clubs =5;
   int32  jersey_number =6;
   string year_joined =7;
@@ -38,7 +36,7 @@ message GetPlayerByIdRequest{
   string id =1;
 }
 
-message UpdatePlayerPersonalInfoRequest{
+message UpdatePlayerRequest{
   string id =1;
   string first_name =2;
   string last_name =3;
@@ -46,6 +44,15 @@ message UpdatePlayerPersonalInfoRequest{
   string marital_status =5;
   string email =6;
   string phone_number =7;
+  string year_of_experience =8;
+  int32  jersey_number =9;
+  string year_joined =10;
+  string position_on_the_field =11;
+  string number_of_goals_scored =12;
+  string player_status =13;
+  string name =14;
+  string city =15;
+  string zip_code =16;
 }
 
 message UpdateAddressRequest{
@@ -65,12 +72,11 @@ message GetPlayerUsingJerseyNumberRequest{
 
 message UpdatePlayerWithFieldDataRequest{
   string year_of_experience =2;
-  int32 number_of_goals =3;
   repeated string previous_clubs =4;
   int32  jersey_number =5;
   string year_joined =6;
   string position_on_the_field =7;
-  int32 number_of_goals_scored =8;
+  string number_of_goals_scored =8;
   string player_status =9;
   string personal_info_id =10;
 }
@@ -87,12 +93,14 @@ message GetPlayerByIdResponse{
   string email =5;
   string phone_number =6;
   string year_of_experience =7;
-  string number_of_goals =8;
   int32  jersey_number =10;
   string year_joined =11;
   string position_on_the_field =12;
-  int32 number_of_goals_scored =13;
+  string number_of_goals_scored =13;
   string player_status =14;
+  string name =15;
+  string city =16;
+  string zipCode =17;
 }
 
 message HealthStatusResponse{
@@ -116,13 +124,10 @@ message Empty{
 
 service PlayerService{
   rpc CreatePlayer(CreatePlayerRequest) returns(Empty);
+  rpc UpdatePlayer(UpdatePlayerRequest) returns (Empty);
   rpc GetPlayerById(GetPlayerByIdRequest) returns(GetPlayerByIdResponse);
   rpc GetPlayerByPhoneNumber(GetPlayerByPhoneNumberRequest) returns (GetPlayerByIdResponse);
-  rpc UpdatePlayerPersonalInfo(UpdatePlayerPersonalInfoRequest) returns (Empty);
-  rpc UpdateAddress(UpdateAddressRequest) returns (Empty);
-  rpc CreatePlayerWithFieldData(CreatePlayerFieldRequest) returns (Empty);
   rpc GetPlayerByJerseyNumber(GetPlayerUsingJerseyNumberRequest) returns (GetPlayerByIdResponse);
-  rpc UpdatePayerWithFieldData(UpdatePlayerWithFieldDataRequest) returns (Empty);
   rpc DeletePlayer(DeletePlayerRequest) returns (Empty);
 }
 

@@ -118,7 +118,7 @@ func TestCreatePlayerWithField(t *testing.T) {
 	playerRecord := &models.FieldInfo{
 		PersonalInfoId:      "user-id-1234-fati",
 		YearOfExperience:    "6 years",
-		NumberOfGoalsScored: 50000,
+		NumberOfGoalsScored: "50",
 	}
 
 	err = db.CreatePlayerWithFieldsData(*playerRecord)
@@ -134,7 +134,7 @@ func TestUpdateFieldRecord(t *testing.T) {
 	}
 	playerRecord := &models.FieldInfo{
 		YearOfExperience:    "6 years",
-		NumberOfGoalsScored: 50000,
+		NumberOfGoalsScored: "50",
 		JerseyNumber:        22,
 		YearJoined:          "2018-12-01",
 	}

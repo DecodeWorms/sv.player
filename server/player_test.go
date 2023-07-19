@@ -17,7 +17,7 @@ func TestCreatePlayer(t *testing.T) {
 
 	storeMock := mocks.NewMockPlayerStore(ctrl)
 	storeMock.EXPECT().CreatePlayer(gomock.Any()).Return(nil).Times(1)
-	handler, _ := New(storeMock)
+	handler, _ := NewPlayerHandler(storeMock)
 	_, err := handler.CreatePlayer(context.Background(), &player.CreatePlayerRequest{
 		Id:            "test-id",
 		FirstName:     "John",
@@ -30,26 +30,6 @@ func TestCreatePlayer(t *testing.T) {
 	assert.Nil(t, err)
 }
 
-func TestCreatePlayerWithFieldData(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	ctrl.Finish()
-	storeMock := mocks.NewMockPlayerStore(ctrl)
-	storeMock.EXPECT().CreatePlayerWithFieldsData(gomock.Any()).Return(nil).Times(1)
-	handler, _ := New(storeMock)
-	_, err := handler.CreatePlayerWithFieldData(context.Background(), &player.CreatePlayerFieldRequest{
-		Id:                  "test-id-data-123",
-		PlayerId:            "test-id-player-id-1234",
-		YearOfExperience:    "10 years",
-		NumberOfGoals:       22,
-		JerseyNumber:        10,
-		YearJoined:          "2019-12-12",
-		PositionOnTheField:  "Mid-Fielder",
-		NumberOfGoalsScored: "Thirty",
-		PlayerStatus:        "Available",
-	})
-	assert.Nil(t, err)
-}
-
 func TestDeletePlayer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	ctrl.Finish()
@@ -58,7 +38,7 @@ func TestDeletePlayer(t *testing.T) {
 	storemock := mocks.NewMockPlayerStore(ctrl)
 	storemock.EXPECT().DeletePlayer(id).Return(nil).Times(1)
 
-	handler, _ := New(storemock)
+	handler, _ := NewPlayerHandler(storemock)
 	err := handler.playerService.DeletePlayer(id)
 	assert.Nil(t, err)
 }
@@ -78,7 +58,7 @@ func TestGetplayerById(t *testing.T) {
 
 	respo := &models.FieldInfo{
 		YearOfExperience:    "22",
-		NumberOfGoalsScored: 10,
+		NumberOfGoalsScored: "10",
 		JerseyNumber:        10,
 		YearJoined:          "2018-3-22",
 		PersonalInfoId:      "Striker",
@@ -88,7 +68,7 @@ func TestGetplayerById(t *testing.T) {
 	storemock := mocks.NewMockPlayerStore(ctrl)
 	storemock.EXPECT().GetPlayerById(gomock.Any()).Return(resp, nil).Times(1)
 	storemock.EXPECT().GetPlayerWithFieldsInfoById(gomock.Any()).Return(respo, nil).Times(1)
-	handler, _ := New(storemock)
+	handler, _ := NewPlayerHandler(storemock)
 	res, err := handler.playerService.GetPlayerById("id")
 	assert.Nil(t, err)
 	assert.NotNil(t, res)
@@ -109,7 +89,7 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 
 	respo := &models.FieldInfo{
 		YearOfExperience:    "22",
-		NumberOfGoalsScored: 10,
+		NumberOfGoalsScored: "10",
 		JerseyNumber:        10,
 		YearJoined:          "2018-3-22",
 		PersonalInfoId:      "Striker",
@@ -119,7 +99,7 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 	storemock := mocks.NewMockPlayerStore(ctrl)
 	storemock.EXPECT().GetPlayerByPhoneNumber(gomock.Any()).Return(resp, nil).Times(1)
 	storemock.EXPECT().GetPlayerWithFieldsInfoById(gomock.Any()).Return(respo, nil).Times(1)
-	handler, _ := New(storemock)
+	handler, _ := NewPlayerHandler(storemock)
 	rest, err := handler.playerService.GetPlayerByPhoneNumber("test-123")
 	assert.Nil(t, err)
 	assert.NotNil(t, rest)

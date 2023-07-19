@@ -34,6 +34,76 @@ func (m *MockDataStore) EXPECT() *MockDataStoreMockRecorder {
 	return m.recorder
 }
 
+// AutoMigrateAddressInfo mocks base method.
+func (m *MockDataStore) AutoMigrateAddressInfo() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AutoMigrateAddressInfo")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AutoMigrateAddressInfo indicates an expected call of AutoMigrateAddressInfo.
+func (mr *MockDataStoreMockRecorder) AutoMigrateAddressInfo() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AutoMigrateAddressInfo", reflect.TypeOf((*MockDataStore)(nil).AutoMigrateAddressInfo))
+}
+
+// AutoMigrateClubsPreviouslyPlazed mocks base method.
+func (m *MockDataStore) AutoMigrateClubsPreviouslyPlazed() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AutoMigrateClubsPreviouslyPlazed")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AutoMigrateClubsPreviouslyPlazed indicates an expected call of AutoMigrateClubsPreviouslyPlazed.
+func (mr *MockDataStoreMockRecorder) AutoMigrateClubsPreviouslyPlazed() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AutoMigrateClubsPreviouslyPlazed", reflect.TypeOf((*MockDataStore)(nil).AutoMigrateClubsPreviouslyPlazed))
+}
+
+// AutoMigrateFieldInfo mocks base method.
+func (m *MockDataStore) AutoMigrateFieldInfo() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AutoMigrateFieldInfo")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AutoMigrateFieldInfo indicates an expected call of AutoMigrateFieldInfo.
+func (mr *MockDataStoreMockRecorder) AutoMigrateFieldInfo() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AutoMigrateFieldInfo", reflect.TypeOf((*MockDataStore)(nil).AutoMigrateFieldInfo))
+}
+
+// AutoMigratePersonalInfo mocks base method.
+func (m *MockDataStore) AutoMigratePersonalInfo() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AutoMigratePersonalInfo")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AutoMigratePersonalInfo indicates an expected call of AutoMigratePersonalInfo.
+func (mr *MockDataStoreMockRecorder) AutoMigratePersonalInfo() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AutoMigratePersonalInfo", reflect.TypeOf((*MockDataStore)(nil).AutoMigratePersonalInfo))
+}
+
+// CreateAddress mocks base method.
+func (m *MockDataStore) CreateAddress(data *models.Address) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateAddress", data)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateAddress indicates an expected call of CreateAddress.
+func (mr *MockDataStoreMockRecorder) CreateAddress(data interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAddress", reflect.TypeOf((*MockDataStore)(nil).CreateAddress), data)
+}
+
 // CreatePlayer mocks base method.
 func (m *MockDataStore) CreatePlayer(data models.PersonalInfo) error {
 	m.ctrl.T.Helper()
@@ -76,6 +146,49 @@ func (mr *MockDataStoreMockRecorder) DeletePlayer(id interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePlayer", reflect.TypeOf((*MockDataStore)(nil).DeletePlayer), id)
 }
 
+// DeletePlayerAddress mocks base method.
+func (m *MockDataStore) DeletePlayerAddress(id string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePlayerAddress", id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeletePlayerAddress indicates an expected call of DeletePlayerAddress.
+func (mr *MockDataStoreMockRecorder) DeletePlayerAddress(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePlayerAddress", reflect.TypeOf((*MockDataStore)(nil).DeletePlayerAddress), id)
+}
+
+// DeletePlayerFieldInfo mocks base method.
+func (m *MockDataStore) DeletePlayerFieldInfo(id string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePlayerFieldInfo", id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeletePlayerFieldInfo indicates an expected call of DeletePlayerFieldInfo.
+func (mr *MockDataStoreMockRecorder) DeletePlayerFieldInfo(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePlayerFieldInfo", reflect.TypeOf((*MockDataStore)(nil).DeletePlayerFieldInfo), id)
+}
+
+// GetAddressById mocks base method.
+func (m *MockDataStore) GetAddressById(id string) (*models.Address, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAddressById", id)
+	ret0, _ := ret[0].(*models.Address)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAddressById indicates an expected call of GetAddressById.
+func (mr *MockDataStoreMockRecorder) GetAddressById(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAddressById", reflect.TypeOf((*MockDataStore)(nil).GetAddressById), id)
+}
+
 // GetPlayer mocks base method.
 func (m *MockDataStore) GetPlayer(jerseyNumber string) (*models.FieldInfo, error) {
 	m.ctrl.T.Helper()
@@ -106,6 +219,21 @@ func (mr *MockDataStoreMockRecorder) GetPlayerById(id interface{}) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayerById", reflect.TypeOf((*MockDataStore)(nil).GetPlayerById), id)
 }
 
+// GetPlayerByJerseyNumber mocks base method.
+func (m *MockDataStore) GetPlayerByJerseyNumber(jerseyNumber string) (*models.FieldInfo, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPlayerByJerseyNumber", jerseyNumber)
+	ret0, _ := ret[0].(*models.FieldInfo)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPlayerByJerseyNumber indicates an expected call of GetPlayerByJerseyNumber.
+func (mr *MockDataStoreMockRecorder) GetPlayerByJerseyNumber(jerseyNumber interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayerByJerseyNumber", reflect.TypeOf((*MockDataStore)(nil).GetPlayerByJerseyNumber), jerseyNumber)
+}
+
 // GetPlayerByPhoneNumber mocks base method.
 func (m *MockDataStore) GetPlayerByPhoneNumber(phoneNumber string) (*models.PersonalInfo, error) {
 	m.ctrl.T.Helper()
@@ -134,6 +262,20 @@ func (m *MockDataStore) GetPlayerWithFieldsInfoById(id string) (*models.FieldInf
 func (mr *MockDataStoreMockRecorder) GetPlayerWithFieldsInfoById(id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayerWithFieldsInfoById", reflect.TypeOf((*MockDataStore)(nil).GetPlayerWithFieldsInfoById), id)
+}
+
+// UpdateAddress mocks base method.
+func (m *MockDataStore) UpdateAddress(id string, data *models.Address) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateAddress", id, data)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateAddress indicates an expected call of UpdateAddress.
+func (mr *MockDataStoreMockRecorder) UpdateAddress(id, data interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAddress", reflect.TypeOf((*MockDataStore)(nil).UpdateAddress), id, data)
 }
 
 // UpdatePlayer mocks base method.
@@ -187,6 +329,76 @@ func (m *MockPlayerStore) EXPECT() *MockPlayerStoreMockRecorder {
 	return m.recorder
 }
 
+// AutoMigrateAddressInfo mocks base method.
+func (m *MockPlayerStore) AutoMigrateAddressInfo() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AutoMigrateAddressInfo")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AutoMigrateAddressInfo indicates an expected call of AutoMigrateAddressInfo.
+func (mr *MockPlayerStoreMockRecorder) AutoMigrateAddressInfo() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AutoMigrateAddressInfo", reflect.TypeOf((*MockPlayerStore)(nil).AutoMigrateAddressInfo))
+}
+
+// AutoMigrateClubsPreviouslyPlazed mocks base method.
+func (m *MockPlayerStore) AutoMigrateClubsPreviouslyPlazed() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AutoMigrateClubsPreviouslyPlazed")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AutoMigrateClubsPreviouslyPlazed indicates an expected call of AutoMigrateClubsPreviouslyPlazed.
+func (mr *MockPlayerStoreMockRecorder) AutoMigrateClubsPreviouslyPlazed() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AutoMigrateClubsPreviouslyPlazed", reflect.TypeOf((*MockPlayerStore)(nil).AutoMigrateClubsPreviouslyPlazed))
+}
+
+// AutoMigrateFieldInfo mocks base method.
+func (m *MockPlayerStore) AutoMigrateFieldInfo() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AutoMigrateFieldInfo")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AutoMigrateFieldInfo indicates an expected call of AutoMigrateFieldInfo.
+func (mr *MockPlayerStoreMockRecorder) AutoMigrateFieldInfo() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AutoMigrateFieldInfo", reflect.TypeOf((*MockPlayerStore)(nil).AutoMigrateFieldInfo))
+}
+
+// AutoMigratePersonalInfo mocks base method.
+func (m *MockPlayerStore) AutoMigratePersonalInfo() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AutoMigratePersonalInfo")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AutoMigratePersonalInfo indicates an expected call of AutoMigratePersonalInfo.
+func (mr *MockPlayerStoreMockRecorder) AutoMigratePersonalInfo() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AutoMigratePersonalInfo", reflect.TypeOf((*MockPlayerStore)(nil).AutoMigratePersonalInfo))
+}
+
+// CreateAddress mocks base method.
+func (m *MockPlayerStore) CreateAddress(data *models.Address) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateAddress", data)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateAddress indicates an expected call of CreateAddress.
+func (mr *MockPlayerStoreMockRecorder) CreateAddress(data interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAddress", reflect.TypeOf((*MockPlayerStore)(nil).CreateAddress), data)
+}
+
 // CreatePlayer mocks base method.
 func (m *MockPlayerStore) CreatePlayer(data models.PersonalInfo) error {
 	m.ctrl.T.Helper()
@@ -229,6 +441,49 @@ func (mr *MockPlayerStoreMockRecorder) DeletePlayer(id interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePlayer", reflect.TypeOf((*MockPlayerStore)(nil).DeletePlayer), id)
 }
 
+// DeletePlayerAddress mocks base method.
+func (m *MockPlayerStore) DeletePlayerAddress(id string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePlayerAddress", id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeletePlayerAddress indicates an expected call of DeletePlayerAddress.
+func (mr *MockPlayerStoreMockRecorder) DeletePlayerAddress(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePlayerAddress", reflect.TypeOf((*MockPlayerStore)(nil).DeletePlayerAddress), id)
+}
+
+// DeletePlayerFieldInfo mocks base method.
+func (m *MockPlayerStore) DeletePlayerFieldInfo(id string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePlayerFieldInfo", id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeletePlayerFieldInfo indicates an expected call of DeletePlayerFieldInfo.
+func (mr *MockPlayerStoreMockRecorder) DeletePlayerFieldInfo(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePlayerFieldInfo", reflect.TypeOf((*MockPlayerStore)(nil).DeletePlayerFieldInfo), id)
+}
+
+// GetAddressById mocks base method.
+func (m *MockPlayerStore) GetAddressById(id string) (*models.Address, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAddressById", id)
+	ret0, _ := ret[0].(*models.Address)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAddressById indicates an expected call of GetAddressById.
+func (mr *MockPlayerStoreMockRecorder) GetAddressById(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAddressById", reflect.TypeOf((*MockPlayerStore)(nil).GetAddressById), id)
+}
+
 // GetPlayer mocks base method.
 func (m *MockPlayerStore) GetPlayer(jerseyNumber string) (*models.FieldInfo, error) {
 	m.ctrl.T.Helper()
@@ -259,6 +514,21 @@ func (mr *MockPlayerStoreMockRecorder) GetPlayerById(id interface{}) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayerById", reflect.TypeOf((*MockPlayerStore)(nil).GetPlayerById), id)
 }
 
+// GetPlayerByJerseyNumber mocks base method.
+func (m *MockPlayerStore) GetPlayerByJerseyNumber(jerseyNumber string) (*models.FieldInfo, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPlayerByJerseyNumber", jerseyNumber)
+	ret0, _ := ret[0].(*models.FieldInfo)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPlayerByJerseyNumber indicates an expected call of GetPlayerByJerseyNumber.
+func (mr *MockPlayerStoreMockRecorder) GetPlayerByJerseyNumber(jerseyNumber interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayerByJerseyNumber", reflect.TypeOf((*MockPlayerStore)(nil).GetPlayerByJerseyNumber), jerseyNumber)
+}
+
 // GetPlayerByPhoneNumber mocks base method.
 func (m *MockPlayerStore) GetPlayerByPhoneNumber(phoneNumber string) (*models.PersonalInfo, error) {
 	m.ctrl.T.Helper()
@@ -287,6 +557,20 @@ func (m *MockPlayerStore) GetPlayerWithFieldsInfoById(id string) (*models.FieldI
 func (mr *MockPlayerStoreMockRecorder) GetPlayerWithFieldsInfoById(id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayerWithFieldsInfoById", reflect.TypeOf((*MockPlayerStore)(nil).GetPlayerWithFieldsInfoById), id)
+}
+
+// UpdateAddress mocks base method.
+func (m *MockPlayerStore) UpdateAddress(id string, data *models.Address) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateAddress", id, data)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateAddress indicates an expected call of UpdateAddress.
+func (mr *MockPlayerStoreMockRecorder) UpdateAddress(id, data interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAddress", reflect.TypeOf((*MockPlayerStore)(nil).UpdateAddress), id, data)
 }
 
 // UpdatePlayer mocks base method.
