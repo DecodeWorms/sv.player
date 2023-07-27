@@ -29,11 +29,12 @@ func TestCreatePlayer(t *testing.T) {
 
 	//Persist Data to the db..
 	playerRecord := models.PersonalInfo{
-		Id:            "abdul-1234-test",
-		FirstName:     "Abdulhameed",
-		LastName:      "Musa",
+		Id:            "Qos-1234-test",
+		FirstName:     "Qosim",
+		LastName:      "AbdulQadr",
 		Gender:        "male",
 		MaritalStatus: "single",
+		PhoneNumber:   "0919673928430",
 	}
 
 	if err = db.CreatePlayer(playerRecord); err != nil {
@@ -49,12 +50,12 @@ func TestUpdatePlayer(t *testing.T) {
 	}
 
 	//player id
-	id := "abdul-1234-test"
+	id := "Qos-1234-test"
 	playerRecord := &models.PersonalInfo{
-		FirstName:   "Muhammad",
+		FirstName:   "Abdulhameed",
 		LastName:    "Awwal",
 		Gender:      "male",
-		PhoneNumber: "09000000000",
+		PhoneNumber: "0919673928430",
 	}
 
 	err = db.UpdatePlayer(id, playerRecord)
@@ -69,7 +70,7 @@ func TestGetPlayerById(t *testing.T) {
 	}
 
 	//user id
-	playerId := "abdul-1234-test"
+	playerId := "Qos-1234-test"
 
 	user, err := db.GetPlayerById(playerId)
 	assert.Nil(t, err)
@@ -85,7 +86,7 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 	}
 
 	//user id
-	phoneNumber := "09000000000"
+	phoneNumber := "0919673928430"
 
 	u, err := db.GetPlayerByPhoneNumber(phoneNumber)
 	assert.Nil(t, err)
