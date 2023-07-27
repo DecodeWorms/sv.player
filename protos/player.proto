@@ -45,7 +45,7 @@ message UpdatePlayerRequest{
   string email =6;
   string phone_number =7;
   string year_of_experience =8;
-  int32  jersey_number =9;
+  string  jersey_number =9;
   string year_joined =10;
   string position_on_the_field =11;
   string number_of_goals_scored =12;
@@ -93,7 +93,7 @@ message GetPlayerByIdResponse{
   string email =5;
   string phone_number =6;
   string year_of_experience =7;
-  int32  jersey_number =10;
+  string  jersey_number =10;
   string year_joined =11;
   string position_on_the_field =12;
   string number_of_goals_scored =13;
@@ -117,6 +117,19 @@ message SalaryResponse{
   string bonus_status =4;
 }
 
+message UpdateKyc{
+  string id =1;
+  string year_of_experience =2;
+  string  jersey_number =3;
+  string year_joined =4;
+  string position_on_the_field =5;
+  string number_of_goals_scored =6;
+  string player_status =7;
+  string name =8;
+  string city =9;
+  string zip_code =10;
+}
+
 
 message Empty{
 }
@@ -124,11 +137,12 @@ message Empty{
 
 service PlayerService{
   rpc CreatePlayer(CreatePlayerRequest) returns(Empty);
-  rpc UpdatePlayer(UpdatePlayerRequest) returns (Empty);
+  rpc UpdatePlayerExistingRecord(UpdatePlayerRequest) returns (Empty);
   rpc GetPlayerById(GetPlayerByIdRequest) returns(GetPlayerByIdResponse);
   rpc GetPlayerByPhoneNumber(GetPlayerByPhoneNumberRequest) returns (GetPlayerByIdResponse);
   rpc GetPlayerByJerseyNumber(GetPlayerUsingJerseyNumberRequest) returns (GetPlayerByIdResponse);
   rpc DeletePlayer(DeletePlayerRequest) returns (Empty);
+  rpc CompleteKyc(UpdateKyc) returns (Empty);
 }
 
 

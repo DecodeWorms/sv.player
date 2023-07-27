@@ -204,6 +204,21 @@ func (mr *MockDataStoreMockRecorder) GetPlayer(jerseyNumber interface{}) *gomock
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayer", reflect.TypeOf((*MockDataStore)(nil).GetPlayer), jerseyNumber)
 }
 
+// GetPlayerByEmail mocks base method.
+func (m *MockDataStore) GetPlayerByEmail(email string) (*models.PersonalInfo, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPlayerByEmail", email)
+	ret0, _ := ret[0].(*models.PersonalInfo)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPlayerByEmail indicates an expected call of GetPlayerByEmail.
+func (mr *MockDataStoreMockRecorder) GetPlayerByEmail(email interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayerByEmail", reflect.TypeOf((*MockDataStore)(nil).GetPlayerByEmail), email)
+}
+
 // GetPlayerById mocks base method.
 func (m *MockDataStore) GetPlayerById(id string) (*models.PersonalInfo, error) {
 	m.ctrl.T.Helper()
@@ -497,6 +512,21 @@ func (m *MockPlayerStore) GetPlayer(jerseyNumber string) (*models.FieldInfo, err
 func (mr *MockPlayerStoreMockRecorder) GetPlayer(jerseyNumber interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayer", reflect.TypeOf((*MockPlayerStore)(nil).GetPlayer), jerseyNumber)
+}
+
+// GetPlayerByEmail mocks base method.
+func (m *MockPlayerStore) GetPlayerByEmail(email string) (*models.PersonalInfo, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPlayerByEmail", email)
+	ret0, _ := ret[0].(*models.PersonalInfo)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPlayerByEmail indicates an expected call of GetPlayerByEmail.
+func (mr *MockPlayerStoreMockRecorder) GetPlayerByEmail(email interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayerByEmail", reflect.TypeOf((*MockPlayerStore)(nil).GetPlayerByEmail), email)
 }
 
 // GetPlayerById mocks base method.

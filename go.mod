@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/DecodeWorms/messaging-protocol v0.0.0-20230608214326-7f4cf93c5233
-	github.com/DecodeWorms/server-contract v0.0.0-20230714194014-3597942f3982
+	github.com/DecodeWorms/server-contract v0.0.0-20230723143130-6595cbd70c7e
 	github.com/golang/mock v1.6.0
 	github.com/stretchr/testify v1.8.4
 	google.golang.org/grpc v1.56.2

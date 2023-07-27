@@ -19,11 +19,12 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PlayerServiceClient interface {
 	CreatePlayer(ctx context.Context, in *CreatePlayerRequest, opts ...grpc.CallOption) (*Empty, error)
-	UpdatePlayer(ctx context.Context, in *UpdatePlayerRequest, opts ...grpc.CallOption) (*Empty, error)
+	UpdatePlayerExistingRecord(ctx context.Context, in *UpdatePlayerRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetPlayerById(ctx context.Context, in *GetPlayerByIdRequest, opts ...grpc.CallOption) (*GetPlayerByIdResponse, error)
 	GetPlayerByPhoneNumber(ctx context.Context, in *GetPlayerByPhoneNumberRequest, opts ...grpc.CallOption) (*GetPlayerByIdResponse, error)
 	GetPlayerByJerseyNumber(ctx context.Context, in *GetPlayerUsingJerseyNumberRequest, opts ...grpc.CallOption) (*GetPlayerByIdResponse, error)
 	DeletePlayer(ctx context.Context, in *DeletePlayerRequest, opts ...grpc.CallOption) (*Empty, error)
+	CompleteKyc(ctx context.Context, in *UpdateKyc, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type playerServiceClient struct {
@@ -43,9 +44,9 @@ func (c *playerServiceClient) CreatePlayer(ctx context.Context, in *CreatePlayer
 	return out, nil
 }
 
-func (c *playerServiceClient) UpdatePlayer(ctx context.Context, in *UpdatePlayerRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *playerServiceClient) UpdatePlayerExistingRecord(ctx context.Context, in *UpdatePlayerRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/player.PlayerService/UpdatePlayer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/player.PlayerService/UpdatePlayerExistingRecord", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -88,16 +89,26 @@ func (c *playerServiceClient) DeletePlayer(ctx context.Context, in *DeletePlayer
 	return out, nil
 }
 
+func (c *playerServiceClient) CompleteKyc(ctx context.Context, in *UpdateKyc, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/player.PlayerService/CompleteKyc", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PlayerServiceServer is the server API for PlayerService service.
 // All implementations must embed UnimplementedPlayerServiceServer
 // for forward compatibility
 type PlayerServiceServer interface {
 	CreatePlayer(context.Context, *CreatePlayerRequest) (*Empty, error)
-	UpdatePlayer(context.Context, *UpdatePlayerRequest) (*Empty, error)
+	UpdatePlayerExistingRecord(context.Context, *UpdatePlayerRequest) (*Empty, error)
 	GetPlayerById(context.Context, *GetPlayerByIdRequest) (*GetPlayerByIdResponse, error)
 	GetPlayerByPhoneNumber(context.Context, *GetPlayerByPhoneNumberRequest) (*GetPlayerByIdResponse, error)
 	GetPlayerByJerseyNumber(context.Context, *GetPlayerUsingJerseyNumberRequest) (*GetPlayerByIdResponse, error)
 	DeletePlayer(context.Context, *DeletePlayerRequest) (*Empty, error)
+	CompleteKyc(context.Context, *UpdateKyc) (*Empty, error)
 	mustEmbedUnimplementedPlayerServiceServer()
 }
 
@@ -108,8 +119,8 @@ type UnimplementedPlayerServiceServer struct {
 func (UnimplementedPlayerServiceServer) CreatePlayer(context.Context, *CreatePlayerRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePlayer not implemented")
 }
-func (UnimplementedPlayerServiceServer) UpdatePlayer(context.Context, *UpdatePlayerRequest) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePlayer not implemented")
+func (UnimplementedPlayerServiceServer) UpdatePlayerExistingRecord(context.Context, *UpdatePlayerRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePlayerExistingRecord not implemented")
 }
 func (UnimplementedPlayerServiceServer) GetPlayerById(context.Context, *GetPlayerByIdRequest) (*GetPlayerByIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlayerById not implemented")
@@ -122,6 +133,9 @@ func (UnimplementedPlayerServiceServer) GetPlayerByJerseyNumber(context.Context,
 }
 func (UnimplementedPlayerServiceServer) DeletePlayer(context.Context, *DeletePlayerRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePlayer not implemented")
+}
+func (UnimplementedPlayerServiceServer) CompleteKyc(context.Context, *UpdateKyc) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompleteKyc not implemented")
 }
 func (UnimplementedPlayerServiceServer) mustEmbedUnimplementedPlayerServiceServer() {}
 
@@ -154,20 +168,20 @@ func _PlayerService_CreatePlayer_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PlayerService_UpdatePlayer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PlayerService_UpdatePlayerExistingRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdatePlayerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PlayerServiceServer).UpdatePlayer(ctx, in)
+		return srv.(PlayerServiceServer).UpdatePlayerExistingRecord(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/player.PlayerService/UpdatePlayer",
+		FullMethod: "/player.PlayerService/UpdatePlayerExistingRecord",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlayerServiceServer).UpdatePlayer(ctx, req.(*UpdatePlayerRequest))
+		return srv.(PlayerServiceServer).UpdatePlayerExistingRecord(ctx, req.(*UpdatePlayerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -244,6 +258,24 @@ func _PlayerService_DeletePlayer_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PlayerService_CompleteKyc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateKyc)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlayerServiceServer).CompleteKyc(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/player.PlayerService/CompleteKyc",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlayerServiceServer).CompleteKyc(ctx, req.(*UpdateKyc))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PlayerService_ServiceDesc is the grpc.ServiceDesc for PlayerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -256,8 +288,8 @@ var PlayerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PlayerService_CreatePlayer_Handler,
 		},
 		{
-			MethodName: "UpdatePlayer",
-			Handler:    _PlayerService_UpdatePlayer_Handler,
+			MethodName: "UpdatePlayerExistingRecord",
+			Handler:    _PlayerService_UpdatePlayerExistingRecord_Handler,
 		},
 		{
 			MethodName: "GetPlayerById",
@@ -274,6 +306,10 @@ var PlayerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePlayer",
 			Handler:    _PlayerService_DeletePlayer_Handler,
+		},
+		{
+			MethodName: "CompleteKyc",
+			Handler:    _PlayerService_CompleteKyc_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

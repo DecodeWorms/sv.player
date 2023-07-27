@@ -135,7 +135,7 @@ func TestUpdateFieldRecord(t *testing.T) {
 	playerRecord := &models.FieldInfo{
 		YearOfExperience:    "6 years",
 		NumberOfGoalsScored: "50",
-		JerseyNumber:        22,
+		JerseyNumber:        "22",
 		YearJoined:          "2018-12-01",
 	}
 	err = db.UpdatePlayerWithFieldsInfo("user-id-1234-fati", playerRecord)

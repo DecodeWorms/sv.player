@@ -59,7 +59,7 @@ func TestGetplayerById(t *testing.T) {
 	respo := &models.FieldInfo{
 		YearOfExperience:    "22",
 		NumberOfGoalsScored: "10",
-		JerseyNumber:        10,
+		JerseyNumber:        "10",
 		YearJoined:          "2018-3-22",
 		PersonalInfoId:      "Striker",
 		PlayerClubStatus:    "available",
@@ -90,7 +90,7 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 	respo := &models.FieldInfo{
 		YearOfExperience:    "22",
 		NumberOfGoalsScored: "10",
-		JerseyNumber:        10,
+		JerseyNumber:        "10",
 		YearJoined:          "2018-3-22",
 		PersonalInfoId:      "Striker",
 		PlayerClubStatus:    "available",

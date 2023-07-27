@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 
@@ -25,6 +26,17 @@ func NewPlayerHandler(p data.PlayerStore) (PlayerHandler, error) {
 var _ player.PlayerServiceServer = PlayerHandler{}
 
 func (p PlayerHandler) CreatePlayer(ctx context.Context, in *player.CreatePlayerRequest) (*player.Empty, error) {
+	//verify if the email already in use
+	playerRec, _ := p.playerService.GetPlayerByEmail(in.Email)
+	if playerRec.Email != "" {
+		return nil, fmt.Errorf("error email already exist", nil)
+	}
+
+	//verify if the phone number already in use
+	field, _ := p.playerService.GetPlayerByPhoneNumber(in.PhoneNumber)
+	if field.PhoneNumber != "" {
+		return nil, fmt.Errorf("error user phone number already exist", nil)
+	}
 	data := models.PersonalInfo{
 		Id:            generatePlayerId(11),
 		FirstName:     in.FirstName,
@@ -71,7 +83,7 @@ func (p PlayerHandler) GetPlayerById(ctx context.Context, in *player.GetPlayerBy
 		Email:               res.Email,
 		YearOfExperience:    field.YearOfExperience,
 		NumberOfGoalsScored: field.NumberOfGoalsScored,
-		JerseyNumber:        int32(field.JerseyNumber),
+		JerseyNumber:        field.JerseyNumber,
 		YearJoined:          field.YearJoined,
 		PositionOnTheField:  field.PositionOnTheField,
 		PlayerStatus:        field.PlayerClubStatus,
@@ -107,7 +119,7 @@ func (p PlayerHandler) GetPlayerByPhoneNumber(ctx context.Context, in *player.Ge
 		Email:               res.Email,
 		YearOfExperience:    field.YearOfExperience,
 		NumberOfGoalsScored: field.NumberOfGoalsScored,
-		JerseyNumber:        int32(field.JerseyNumber),
+		JerseyNumber:        field.JerseyNumber,
 		YearJoined:          field.YearJoined,
 		PositionOnTheField:  field.PositionOnTheField,
 		PlayerStatus:        field.PlayerClubStatus,
@@ -117,7 +129,49 @@ func (p PlayerHandler) GetPlayerByPhoneNumber(ctx context.Context, in *player.Ge
 	}, nil
 }
 
-func (p PlayerHandler) UpdatePlayer(ctx context.Context, in *player.UpdatePlayerRequest) (*player.Empty, error) {
+// complete me
+func (p PlayerHandler) CompleteKyc(ctx context.Context, in *player.UpdateKyc) (*player.Empty, error) {
+	//Verify if the player Id exists
+	_, err := p.playerService.GetPlayerById(in.Id)
+	if err != nil {
+		return nil, errors.New("user record is not exist")
+	}
+
+	//Update field info
+	data := models.FieldInfo{
+		PersonalInfoId:      in.Id,
+		YearOfExperience:    in.YearOfExperience,
+		NumberOfGoalsScored: in.NumberOfGoalsScored,
+		JerseyNumber:        in.JerseyNumber,
+		YearJoined:          in.YearJoined,
+		PositionOnTheField:  in.PositionOnTheField,
+		PlayerClubStatus:    in.PlayerStatus,
+	}
+
+	if err := p.playerService.CreatePlayerWithFieldsData(data); err != nil {
+		return nil, errors.New("unable to update player field record")
+	}
+
+	//update player address record
+	add := &models.Address{
+		PersonalInfoId: in.Id,
+		Name:           in.Name,
+		ZipCode:        in.ZipCode,
+		City:           in.City,
+	}
+	if err := p.playerService.CreateAddress(add); err != nil {
+		return nil, errors.New("unable to update player address")
+	}
+	return &player.Empty{}, nil
+}
+
+func (p PlayerHandler) UpdatePlayerExistingRecord(ctx context.Context, in *player.UpdatePlayerRequest) (*player.Empty, error) {
+	//verify if the user exists
+	_, err := p.playerService.GetPlayerById(in.Id)
+	if err != nil {
+		return nil, errors.New("error encountered in getting personal record")
+	}
+
 	//update personal info
 	per := &models.PersonalInfo{
 		FirstName:     in.FirstName,
@@ -132,26 +186,24 @@ func (p PlayerHandler) UpdatePlayer(ctx context.Context, in *player.UpdatePlayer
 	}
 	//update field info
 	field := models.FieldInfo{
-		PersonalInfoId:      in.Id,
 		YearOfExperience:    in.YearOfExperience,
 		NumberOfGoalsScored: in.NumberOfGoalsScored,
-		JerseyNumber:        int(in.JerseyNumber),
+		JerseyNumber:        in.JerseyNumber,
 		YearJoined:          in.YearJoined,
 		PositionOnTheField:  in.PositionOnTheField,
 		PlayerClubStatus:    in.PlayerStatus,
 	}
-	if err := p.playerService.CreatePlayerWithFieldsData(field); err != nil {
+	if err := p.playerService.UpdatePlayerWithFieldsInfo(in.Id, &field); err != nil {
 		return nil, fmt.Errorf("error updating player field data %v", err)
 	}
 
 	//update address
 	addr := &models.Address{
-		PersonalInfoId: in.Id,
-		Name:           in.Name,
-		City:           in.City,
-		ZipCode:        in.ZipCode,
+		Name:    in.Name,
+		City:    in.City,
+		ZipCode: in.ZipCode,
 	}
-	if err := p.playerService.CreateAddress(addr); err != nil {
+	if err := p.playerService.UpdateAddress(in.Id, addr); err != nil {
 		return nil, fmt.Errorf("error updating address data %v", err)
 	}
 	return &player.Empty{}, nil
@@ -188,7 +240,7 @@ func (p PlayerHandler) GetPlayerByJerseyNumber(ctx context.Context, in *player.G
 		PositionOnTheField:  field.PositionOnTheField,
 		NumberOfGoalsScored: field.NumberOfGoalsScored,
 		PlayerStatus:        field.PlayerClubStatus,
-		JerseyNumber:        int32(field.JerseyNumber),
+		JerseyNumber:        field.JerseyNumber,
 		Name:                add.Name,
 		City:                add.City,
 		ZipCode:             add.ZipCode,
@@ -243,3 +295,26 @@ func generatePlayerId(length int) string {
 
 	return string(b)
 }
+
+/*query{
+	paginatedOrganization(input:{filter:"",Page:10,Limit:1}){
+   count
+    organization{
+      name
+      email
+      registration_number
+      social_profile
+    }
+  }
+  }
+
+  mutation{
+	login(input:{email:"amthetechguy@gmail.com",password:"harvest600"}){
+	  access_token
+	}
+  }
+
+  headers: {
+	Authorization: 'Bearer ' + token
+  }
+*/

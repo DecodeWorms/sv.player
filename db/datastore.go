@@ -28,4 +28,5 @@ type PlayerStore interface {
 	DeletePlayerFieldInfo(id string) error
 	DeletePlayerAddress(id string) error
 	GetAddressById(id string) (*models.Address, error)
+	GetPlayerByEmail(email string)(*models.PersonalInfo, error)
 }
