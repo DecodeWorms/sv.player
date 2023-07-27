@@ -27,15 +27,15 @@ var _ player.PlayerServiceServer = PlayerHandler{}
 
 func (p PlayerHandler) CreatePlayer(ctx context.Context, in *player.CreatePlayerRequest) (*player.Empty, error) {
 	//verify if the email already in use
-	playerRec, _ := p.playerService.GetPlayerByEmail(in.Email)
-	if playerRec.Email != "" {
-		return nil, fmt.Errorf("error email already exist", nil)
+	_, err := p.playerService.GetPlayerByEmail(in.Email)
+	if err == nil {
+		return nil, fmt.Errorf("error email already exist %v", nil)
 	}
 
 	//verify if the phone number already in use
-	field, _ := p.playerService.GetPlayerByPhoneNumber(in.PhoneNumber)
-	if field.PhoneNumber != "" {
-		return nil, fmt.Errorf("error user phone number already exist", nil)
+	_, err = p.playerService.GetPlayerByPhoneNumber(in.PhoneNumber)
+	if err == nil {
+		return nil, fmt.Errorf("error user phone number already exist %v", nil)
 	}
 	data := models.PersonalInfo{
 		Id:            generatePlayerId(11),
