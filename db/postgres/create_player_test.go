@@ -29,11 +29,11 @@ func TestCreatePlayer(t *testing.T) {
 
 	//Persist Data to the db..
 	playerRecord := models.PersonalInfo{
-		Id:            "user-id-1234-fati",
-		FirstName:     "Fatimah",
-		LastName:      "Abdulhameed",
-		Gender:        "female",
-		MaritalStatus: "married",
+		Id:            "abdul-1234-test",
+		FirstName:     "Abdulhameed",
+		LastName:      "Musa",
+		Gender:        "male",
+		MaritalStatus: "single",
 	}
 
 	if err = db.CreatePlayer(playerRecord); err != nil {
@@ -47,17 +47,13 @@ func TestUpdatePlayer(t *testing.T) {
 	if err != nil {
 		log.Println("Unable to connect to the db..")
 	}
-	//create a database table for a player on Github action
-	if err = db.db.AutoMigrate(&models.PersonalInfo{}); err != nil {
-		log.Println("Unabe to create a table player personal info")
-	}
 
 	//player id
-	id := "user-id-1234-fati"
+	id := "abdul-1234-test"
 	playerRecord := &models.PersonalInfo{
-		FirstName:   "Funmilayo",
-		LastName:    "Akinlola",
-		Gender:      "female",
+		FirstName:   "Muhammad",
+		LastName:    "Awwal",
+		Gender:      "male",
 		PhoneNumber: "09000000000",
 	}
 
@@ -71,13 +67,9 @@ func TestGetPlayerById(t *testing.T) {
 	if err != nil {
 		log.Println("Unable to connect to the db..")
 	}
-	//create a database table for a player on Github action
-	if err = db.db.AutoMigrate(&models.PersonalInfo{}); err != nil {
-		log.Println("Unabe to create a table player personal info")
-	}
 
 	//user id
-	playerId := "user-id-1234-dan"
+	playerId := "abdul-1234-test"
 
 	user, err := db.GetPlayerById(playerId)
 	assert.Nil(t, err)
@@ -90,10 +82,6 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 	db, err := New(Host, User, Dbname, port, Password)
 	if err != nil {
 		log.Println("Unable to connect to the db..")
-	}
-	//create a database table for a player on Github action
-	if err = db.db.AutoMigrate(&models.PersonalInfo{}); err != nil {
-		log.Println("unabe to create a table player personal info")
 	}
 
 	//user id
