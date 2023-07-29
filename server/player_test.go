@@ -15,7 +15,18 @@ func TestCreatePlayer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	ctrl.Finish()
 
+	user := &models.PersonalInfo{
+		FirstName:     "Bola",
+		LastName:      "Yinka",
+		Gender:        "female",
+		MaritalStatus: "single",
+		Email:         "test@gmail.com",
+		PhoneNumber:   "09050095721",
+	}
+
 	storeMock := mocks.NewMockPlayerStore(ctrl)
+	storeMock.EXPECT().GetPlayerByEmail(gomock.Any()).Return(user, nil).Times(1)
+	storeMock.EXPECT().GetPlayerByPhoneNumber("09050095721").Return(user, nil).Times(1)
 	storeMock.EXPECT().CreatePlayer(gomock.Any()).Return(nil).Times(1)
 	handler, _ := NewPlayerHandler(storeMock)
 	_, err := handler.CreatePlayer(context.Background(), &player.CreatePlayerRequest{
@@ -27,7 +38,7 @@ func TestCreatePlayer(t *testing.T) {
 		Email:         "test@mail.com",
 		MaritalStatus: "single",
 	})
-	assert.Nil(t, err)
+	assert.EqualError(t, err, "error email already exist <nil>")
 }
 
 func TestDeletePlayer(t *testing.T) {
