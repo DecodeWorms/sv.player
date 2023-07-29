@@ -19,14 +19,12 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PlayerServiceClient interface {
 	CreatePlayer(ctx context.Context, in *CreatePlayerRequest, opts ...grpc.CallOption) (*Empty, error)
+	UpdatePlayerExistingRecord(ctx context.Context, in *UpdatePlayerRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetPlayerById(ctx context.Context, in *GetPlayerByIdRequest, opts ...grpc.CallOption) (*GetPlayerByIdResponse, error)
 	GetPlayerByPhoneNumber(ctx context.Context, in *GetPlayerByPhoneNumberRequest, opts ...grpc.CallOption) (*GetPlayerByIdResponse, error)
-	UpdatePlayerPersonalInfo(ctx context.Context, in *UpdatePlayerPersonalInfoRequest, opts ...grpc.CallOption) (*Empty, error)
-	UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*Empty, error)
-	CreatePlayerWithFieldData(ctx context.Context, in *CreatePlayerFieldRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetPlayerByJerseyNumber(ctx context.Context, in *GetPlayerUsingJerseyNumberRequest, opts ...grpc.CallOption) (*GetPlayerByIdResponse, error)
-	UpdatePayerWithFieldData(ctx context.Context, in *UpdatePlayerWithFieldDataRequest, opts ...grpc.CallOption) (*Empty, error)
 	DeletePlayer(ctx context.Context, in *DeletePlayerRequest, opts ...grpc.CallOption) (*Empty, error)
+	CompleteKyc(ctx context.Context, in *UpdateKyc, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type playerServiceClient struct {
@@ -40,6 +38,15 @@ func NewPlayerServiceClient(cc grpc.ClientConnInterface) PlayerServiceClient {
 func (c *playerServiceClient) CreatePlayer(ctx context.Context, in *CreatePlayerRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/player.PlayerService/CreatePlayer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *playerServiceClient) UpdatePlayerExistingRecord(ctx context.Context, in *UpdatePlayerRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/player.PlayerService/UpdatePlayerExistingRecord", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,45 +71,9 @@ func (c *playerServiceClient) GetPlayerByPhoneNumber(ctx context.Context, in *Ge
 	return out, nil
 }
 
-func (c *playerServiceClient) UpdatePlayerPersonalInfo(ctx context.Context, in *UpdatePlayerPersonalInfoRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/player.PlayerService/UpdatePlayerPersonalInfo", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *playerServiceClient) UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/player.PlayerService/UpdateAddress", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *playerServiceClient) CreatePlayerWithFieldData(ctx context.Context, in *CreatePlayerFieldRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/player.PlayerService/CreatePlayerWithFieldData", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *playerServiceClient) GetPlayerByJerseyNumber(ctx context.Context, in *GetPlayerUsingJerseyNumberRequest, opts ...grpc.CallOption) (*GetPlayerByIdResponse, error) {
 	out := new(GetPlayerByIdResponse)
 	err := c.cc.Invoke(ctx, "/player.PlayerService/GetPlayerByJerseyNumber", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *playerServiceClient) UpdatePayerWithFieldData(ctx context.Context, in *UpdatePlayerWithFieldDataRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/player.PlayerService/UpdatePayerWithFieldData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -118,19 +89,26 @@ func (c *playerServiceClient) DeletePlayer(ctx context.Context, in *DeletePlayer
 	return out, nil
 }
 
+func (c *playerServiceClient) CompleteKyc(ctx context.Context, in *UpdateKyc, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/player.PlayerService/CompleteKyc", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PlayerServiceServer is the server API for PlayerService service.
 // All implementations must embed UnimplementedPlayerServiceServer
 // for forward compatibility
 type PlayerServiceServer interface {
 	CreatePlayer(context.Context, *CreatePlayerRequest) (*Empty, error)
+	UpdatePlayerExistingRecord(context.Context, *UpdatePlayerRequest) (*Empty, error)
 	GetPlayerById(context.Context, *GetPlayerByIdRequest) (*GetPlayerByIdResponse, error)
 	GetPlayerByPhoneNumber(context.Context, *GetPlayerByPhoneNumberRequest) (*GetPlayerByIdResponse, error)
-	UpdatePlayerPersonalInfo(context.Context, *UpdatePlayerPersonalInfoRequest) (*Empty, error)
-	UpdateAddress(context.Context, *UpdateAddressRequest) (*Empty, error)
-	CreatePlayerWithFieldData(context.Context, *CreatePlayerFieldRequest) (*Empty, error)
 	GetPlayerByJerseyNumber(context.Context, *GetPlayerUsingJerseyNumberRequest) (*GetPlayerByIdResponse, error)
-	UpdatePayerWithFieldData(context.Context, *UpdatePlayerWithFieldDataRequest) (*Empty, error)
 	DeletePlayer(context.Context, *DeletePlayerRequest) (*Empty, error)
+	CompleteKyc(context.Context, *UpdateKyc) (*Empty, error)
 	mustEmbedUnimplementedPlayerServiceServer()
 }
 
@@ -141,29 +119,23 @@ type UnimplementedPlayerServiceServer struct {
 func (UnimplementedPlayerServiceServer) CreatePlayer(context.Context, *CreatePlayerRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePlayer not implemented")
 }
+func (UnimplementedPlayerServiceServer) UpdatePlayerExistingRecord(context.Context, *UpdatePlayerRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePlayerExistingRecord not implemented")
+}
 func (UnimplementedPlayerServiceServer) GetPlayerById(context.Context, *GetPlayerByIdRequest) (*GetPlayerByIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlayerById not implemented")
 }
 func (UnimplementedPlayerServiceServer) GetPlayerByPhoneNumber(context.Context, *GetPlayerByPhoneNumberRequest) (*GetPlayerByIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlayerByPhoneNumber not implemented")
 }
-func (UnimplementedPlayerServiceServer) UpdatePlayerPersonalInfo(context.Context, *UpdatePlayerPersonalInfoRequest) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePlayerPersonalInfo not implemented")
-}
-func (UnimplementedPlayerServiceServer) UpdateAddress(context.Context, *UpdateAddressRequest) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateAddress not implemented")
-}
-func (UnimplementedPlayerServiceServer) CreatePlayerWithFieldData(context.Context, *CreatePlayerFieldRequest) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatePlayerWithFieldData not implemented")
-}
 func (UnimplementedPlayerServiceServer) GetPlayerByJerseyNumber(context.Context, *GetPlayerUsingJerseyNumberRequest) (*GetPlayerByIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlayerByJerseyNumber not implemented")
 }
-func (UnimplementedPlayerServiceServer) UpdatePayerWithFieldData(context.Context, *UpdatePlayerWithFieldDataRequest) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePayerWithFieldData not implemented")
-}
 func (UnimplementedPlayerServiceServer) DeletePlayer(context.Context, *DeletePlayerRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePlayer not implemented")
+}
+func (UnimplementedPlayerServiceServer) CompleteKyc(context.Context, *UpdateKyc) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompleteKyc not implemented")
 }
 func (UnimplementedPlayerServiceServer) mustEmbedUnimplementedPlayerServiceServer() {}
 
@@ -192,6 +164,24 @@ func _PlayerService_CreatePlayer_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PlayerServiceServer).CreatePlayer(ctx, req.(*CreatePlayerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlayerService_UpdatePlayerExistingRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePlayerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlayerServiceServer).UpdatePlayerExistingRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/player.PlayerService/UpdatePlayerExistingRecord",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlayerServiceServer).UpdatePlayerExistingRecord(ctx, req.(*UpdatePlayerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -232,60 +222,6 @@ func _PlayerService_GetPlayerByPhoneNumber_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PlayerService_UpdatePlayerPersonalInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePlayerPersonalInfoRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PlayerServiceServer).UpdatePlayerPersonalInfo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/player.PlayerService/UpdatePlayerPersonalInfo",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlayerServiceServer).UpdatePlayerPersonalInfo(ctx, req.(*UpdatePlayerPersonalInfoRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PlayerService_UpdateAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateAddressRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PlayerServiceServer).UpdateAddress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/player.PlayerService/UpdateAddress",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlayerServiceServer).UpdateAddress(ctx, req.(*UpdateAddressRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PlayerService_CreatePlayerWithFieldData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePlayerFieldRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PlayerServiceServer).CreatePlayerWithFieldData(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/player.PlayerService/CreatePlayerWithFieldData",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlayerServiceServer).CreatePlayerWithFieldData(ctx, req.(*CreatePlayerFieldRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _PlayerService_GetPlayerByJerseyNumber_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetPlayerUsingJerseyNumberRequest)
 	if err := dec(in); err != nil {
@@ -300,24 +236,6 @@ func _PlayerService_GetPlayerByJerseyNumber_Handler(srv interface{}, ctx context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PlayerServiceServer).GetPlayerByJerseyNumber(ctx, req.(*GetPlayerUsingJerseyNumberRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PlayerService_UpdatePayerWithFieldData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePlayerWithFieldDataRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PlayerServiceServer).UpdatePayerWithFieldData(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/player.PlayerService/UpdatePayerWithFieldData",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PlayerServiceServer).UpdatePayerWithFieldData(ctx, req.(*UpdatePlayerWithFieldDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -340,6 +258,24 @@ func _PlayerService_DeletePlayer_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PlayerService_CompleteKyc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateKyc)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlayerServiceServer).CompleteKyc(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/player.PlayerService/CompleteKyc",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlayerServiceServer).CompleteKyc(ctx, req.(*UpdateKyc))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PlayerService_ServiceDesc is the grpc.ServiceDesc for PlayerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -352,6 +288,10 @@ var PlayerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PlayerService_CreatePlayer_Handler,
 		},
 		{
+			MethodName: "UpdatePlayerExistingRecord",
+			Handler:    _PlayerService_UpdatePlayerExistingRecord_Handler,
+		},
+		{
 			MethodName: "GetPlayerById",
 			Handler:    _PlayerService_GetPlayerById_Handler,
 		},
@@ -360,28 +300,16 @@ var PlayerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PlayerService_GetPlayerByPhoneNumber_Handler,
 		},
 		{
-			MethodName: "UpdatePlayerPersonalInfo",
-			Handler:    _PlayerService_UpdatePlayerPersonalInfo_Handler,
-		},
-		{
-			MethodName: "UpdateAddress",
-			Handler:    _PlayerService_UpdateAddress_Handler,
-		},
-		{
-			MethodName: "CreatePlayerWithFieldData",
-			Handler:    _PlayerService_CreatePlayerWithFieldData_Handler,
-		},
-		{
 			MethodName: "GetPlayerByJerseyNumber",
 			Handler:    _PlayerService_GetPlayerByJerseyNumber_Handler,
 		},
 		{
-			MethodName: "UpdatePayerWithFieldData",
-			Handler:    _PlayerService_UpdatePayerWithFieldData_Handler,
-		},
-		{
 			MethodName: "DeletePlayer",
 			Handler:    _PlayerService_DeletePlayer_Handler,
+		},
+		{
+			MethodName: "CompleteKyc",
+			Handler:    _PlayerService_CompleteKyc_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
