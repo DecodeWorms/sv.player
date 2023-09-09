@@ -38,7 +38,7 @@ func TestCreatePlayer(t *testing.T) {
 		Email:         "test@mail.com",
 		MaritalStatus: "single",
 	})
-	assert.EqualError(t, err, "error email already exist <nil>")
+	assert.EqualError(t, err, "code : 411 message : error player email already exist type : error type of email already exist")
 }
 
 func TestDeletePlayer(t *testing.T) {
@@ -67,7 +67,7 @@ func TestGetplayerById(t *testing.T) {
 		PhoneNumber:   "090000000000",
 	}
 
-	respo := &models.FieldInfo{
+	fieldInfo := &models.FieldInfo{
 		YearOfExperience:    "22",
 		NumberOfGoalsScored: "10",
 		JerseyNumber:        "10",
@@ -78,7 +78,7 @@ func TestGetplayerById(t *testing.T) {
 
 	storemock := mocks.NewMockPlayerStore(ctrl)
 	storemock.EXPECT().GetPlayerById(gomock.Any()).Return(resp, nil).Times(1)
-	storemock.EXPECT().GetPlayerWithFieldsInfoById(gomock.Any()).Return(respo, nil).Times(1)
+	storemock.EXPECT().GetPlayerWithFieldsInfoById(gomock.Any()).Return(fieldInfo, nil).Times(1)
 	handler, _ := NewPlayerHandler(storemock)
 	res, err := handler.playerService.GetPlayerById("id")
 	assert.Nil(t, err)
@@ -98,7 +98,7 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 		PhoneNumber:   "090000000000",
 	}
 
-	respo := &models.FieldInfo{
+	fieldInfo := &models.FieldInfo{
 		YearOfExperience:    "22",
 		NumberOfGoalsScored: "10",
 		JerseyNumber:        "10",
@@ -109,7 +109,7 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 
 	storemock := mocks.NewMockPlayerStore(ctrl)
 	storemock.EXPECT().GetPlayerByPhoneNumber(gomock.Any()).Return(resp, nil).Times(1)
-	storemock.EXPECT().GetPlayerWithFieldsInfoById(gomock.Any()).Return(respo, nil).Times(1)
+	storemock.EXPECT().GetPlayerWithFieldsInfoById(gomock.Any()).Return(fieldInfo, nil).Times(1)
 	handler, _ := NewPlayerHandler(storemock)
 	rest, err := handler.playerService.GetPlayerByPhoneNumber("test-123")
 	assert.Nil(t, err)
