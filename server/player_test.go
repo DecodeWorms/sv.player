@@ -116,34 +116,3 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 	assert.NotNil(t, rest)
 
 }
-
-/*func TestUpdatePlayerWithFieldsInfo(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	storeMock := mocks.NewMockPlayerStore(ctrl)
-	mockRequest := &player.UpdatePlayerWithFieldDataRequest{
-		PersonalInfoId:      "personal-test-id-123",
-		YearOfExperience:    "22 years",
-		NumberOfGoals:       33,
-		JerseyNumber:        10,
-		YearJoined:          "2019-10-10",
-		PositionOnTheField:  "Striker",
-		NumberOfGoalsScored: 33,
-		PlayerStatus:        "Not available",
-	}
-
-
-	storeMock.EXPECT().UpdatePlayerWithFieldsInfo(mockRequest.PersonalInfoId, gomock.Any()).Return(nil).Times(1)
-	handler, _ := New(storeMock)
-	_, err := handler.UpdatePayerWithFieldData(context.Background(), &player.UpdatePlayerWithFieldDataRequest{
-		PersonalInfoId:      "personal-test-id-123",
-		YearOfExperience:    "22 years",
-		NumberOfGoals:       33,
-		JerseyNumber:        10,
-		YearJoined:          "2019-10-10",
-		PositionOnTheField:  "Striker",
-		NumberOfGoalsScored: 33,
-		PlayerStatus:        "Not available",
-	})
-	assert.Nil(t, err)
-}
-*/
