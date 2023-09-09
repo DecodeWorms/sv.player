@@ -9,6 +9,7 @@ import (
 	//pr "github.com/DecodeWorms/messaging-protocol"
 	"github.com/DecodeWorms/server-contract/models"
 	data "github.com/DecodeWorms/sv.player/db"
+	"github.com/DecodeWorms/sv.player/errorvalues"
 	"github.com/DecodeWorms/sv.player/pb/protos/pb/player"
 )
 
@@ -29,13 +30,13 @@ func (p PlayerHandler) CreatePlayer(ctx context.Context, in *player.CreatePlayer
 	//verify if the email already in use
 	_, err := p.playerService.GetPlayerByEmail(in.Email)
 	if err == nil {
-		return nil, fmt.Errorf("error email already exist %v", nil)
+		return nil, errorvalues.Format(errorvalues.EmailExistStatusCode)
 	}
 
 	//verify if the phone number already in use
 	_, err = p.playerService.GetPlayerByPhoneNumber(in.PhoneNumber)
 	if err == nil {
-		return nil, fmt.Errorf("error user phone number already exist %v", nil)
+		return nil, errorvalues.Format(errorvalues.PhoneNumberExistStatusCode)
 	}
 	data := models.PersonalInfo{
 		Id:            generatePlayerId(11),
@@ -57,21 +58,21 @@ func (p PlayerHandler) GetPlayerById(ctx context.Context, in *player.GetPlayerBy
 	playerId := in.Id
 	res, err := p.playerService.GetPlayerById(playerId)
 	if err != nil {
-		return nil, fmt.Errorf("error getting player info %v", err)
+		return nil, errorvalues.Format(errorvalues.PersonalIdDoesNotExistStatusCode)
 	}
 
 	//get player field info
 
 	field, err := p.playerService.GetPlayerWithFieldsInfoById(playerId)
 	if err != nil {
-		return nil, fmt.Errorf("error getting player field info %v", err)
+		return nil, errorvalues.Format(errorvalues.EmailExistStatusCode)
 	}
 
 	//get player address info
 
 	add, err := p.playerService.GetAddressById(playerId)
 	if err != nil {
-		return nil, fmt.Errorf("error getting player address info %v", err)
+		return nil, errorvalues.Format(errorvalues.EmailExistStatusCode)
 	}
 
 	return &player.GetPlayerByIdResponse{
@@ -97,17 +98,17 @@ func (p PlayerHandler) GetPlayerByPhoneNumber(ctx context.Context, in *player.Ge
 	playerId := in.PhoneNumber
 	res, err := p.playerService.GetPlayerByPhoneNumber(playerId)
 	if err != nil {
-		return nil, fmt.Errorf("error getting player data %v", err)
+		return nil, errorvalues.Format(errorvalues.PhoneNumberExistStatusCode)
 	}
 	field, err := p.playerService.GetPlayerWithFieldsInfoById(res.Id)
 	if err != nil {
-		return nil, fmt.Errorf("error getting player field info %v", err)
+		return nil, errorvalues.Format(errorvalues.PersonalIdDoesNotExistStatusCode)
 	}
 
 	//get player address info
 	add, err := p.playerService.GetAddressById(res.Id)
 	if err != nil {
-		return nil, fmt.Errorf("error getting player address info %v", err)
+		return nil, errorvalues.Format(errorvalues.PersonalIdDoesNotExistStatusCode)
 	}
 
 	return &player.GetPlayerByIdResponse{
@@ -134,7 +135,7 @@ func (p PlayerHandler) CompleteKyc(ctx context.Context, in *player.UpdateKyc) (*
 	//Verify if the player Id exists
 	_, err := p.playerService.GetPlayerById(in.Id)
 	if err != nil {
-		return nil, errors.New("user record is not exist")
+		return nil, errorvalues.Format(errorvalues.PersonalIdDoesNotExistStatusCode)
 	}
 
 	//Update field info
@@ -149,7 +150,7 @@ func (p PlayerHandler) CompleteKyc(ctx context.Context, in *player.UpdateKyc) (*
 	}
 
 	if err := p.playerService.CreatePlayerWithFieldsData(data); err != nil {
-		return nil, errors.New("unable to update player field record")
+		return nil, errorvalues.Format(errorvalues.CreatingPlayerWithFieldInfoStatusCode)
 	}
 
 	//update player address record

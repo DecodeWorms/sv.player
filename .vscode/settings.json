@@ -1,8 +1,11 @@
 {
     "cSpell.words": [
+        "Derror",
+        "errorvalues",
         "gomock",
         "pers",
         "proto",
-        "protos"
+        "protos",
+        "serverprotocol"
     ]
 }
