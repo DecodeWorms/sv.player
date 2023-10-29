@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 
-	store "github.com/DecodeWorms/messaging-protocol"
 	pr "github.com/DecodeWorms/messaging-protocol/pulse"
 	"github.com/DecodeWorms/sv.player/config"
 	db "github.com/DecodeWorms/sv.player/db/postgres"
@@ -19,9 +18,7 @@ func main() {
 		log.Println(err)
 		return
 	}
-	_, err = pr.Init(store.Options{
-		Address: cfg.PulsarUrl,
-	})
+	pu, err := pr.NewMessage(cfg.PulsarUrl)
 	if err != nil {
 		log.Println(err)
 		return
@@ -29,7 +26,7 @@ func main() {
 
 	add := fmt.Sprintf(":%s", cfg.ServerPort)
 
-	sr := grpc.NewServer(db)
+	sr := grpc.NewServer(db, pu)
 	err = sr.Run(add)
 	log.Println(err)
 }

@@ -3,7 +3,7 @@ module github.com/DecodeWorms/sv.player
 go 1.20
 
 require (
-	github.com/DecodeWorms/messaging-protocol v0.0.0-20231014210145-431f5aa466b4
+	github.com/DecodeWorms/messaging-protocol v0.0.0-20231029143248-040003d36911
 	github.com/DecodeWorms/server-contract v0.0.0-20230802170240-da22fa029a19
 	github.com/golang/mock v1.6.0
 	github.com/stretchr/testify v1.8.4
@@ -59,7 +59,6 @@ require (
 	golang.org/x/term v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20230526161137-0005af68ea54 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230525234030-28d5490b6b19 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
