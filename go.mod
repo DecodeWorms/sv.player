@@ -3,7 +3,7 @@ module github.com/DecodeWorms/sv.player
 go 1.20
 
 require (
-	github.com/DecodeWorms/messaging-protocol v0.0.0-20230608214326-7f4cf93c5233
+	github.com/DecodeWorms/messaging-protocol v0.0.0-20231014210145-431f5aa466b4
 	github.com/DecodeWorms/server-contract v0.0.0-20230802170240-da22fa029a19
 	github.com/golang/mock v1.6.0
 	github.com/stretchr/testify v1.8.4
@@ -18,7 +18,7 @@ require (
 	github.com/99designs/keyring v1.2.1 // indirect
 	github.com/AthenZ/athenz v1.10.39 // indirect
 	github.com/DataDog/zstd v1.5.0 // indirect
-	github.com/apache/pulsar-client-go v0.10.0 // indirect
+	github.com/apache/pulsar-client-go v0.11.0 // indirect
 	github.com/ardielle/ardielle-go v1.5.2 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.4.0 // indirect

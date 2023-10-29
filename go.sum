@@ -43,6 +43,8 @@ github.com/DataDog/zstd v1.5.0 h1:+K/VEwIAaPcHiMtQvpLD4lqW7f0Gk3xdYZmI1hD+CXo=
 github.com/DataDog/zstd v1.5.0/go.mod h1:g4AWEaM3yOg3HYfnJ3YIawPnVdXJh9QME85blwSAmyw=
 github.com/DecodeWorms/messaging-protocol v0.0.0-20230608214326-7f4cf93c5233 h1:NzbBSCuxbhRW3ZnoSa3hSYTSsaQa/uS5P85nOOEJs00=
 github.com/DecodeWorms/messaging-protocol v0.0.0-20230608214326-7f4cf93c5233/go.mod h1:XkkufaqWaDH72Y/Mq3joA4Ae6+6cG3K1qvRNgAf0vL0=
+github.com/DecodeWorms/messaging-protocol v0.0.0-20231014210145-431f5aa466b4 h1:hYKi4xJGUqLNi2nitzqN3hMS/eYbigCjs/eK8LwKcC8=
+github.com/DecodeWorms/messaging-protocol v0.0.0-20231014210145-431f5aa466b4/go.mod h1:OpUhVyB6bVJ8IQjUntkEMaEq03rWFnmE+JBFPSKHYn0=
 github.com/DecodeWorms/server-contract v0.0.0-20230611153327-9fb7915a2d48 h1:c1Mcb8Xw/55o89U7oT0F79xR/XQB8Vk3xe+LKfXINRY=
 github.com/DecodeWorms/server-contract v0.0.0-20230611153327-9fb7915a2d48/go.mod h1:opat0sbueNw6ZtNIV6gXpnxhPEEPsfDHptJhP05GPw0=
 github.com/DecodeWorms/server-contract v0.0.0-20230712102859-cef4077b1279 h1:OwBobsTZtZ6zB133eWrWTqdnaF1diE+Iax8YyA5mLGY=
@@ -62,6 +64,8 @@ github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4/go.mod h1:ybxpYRF
 github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d/go.mod h1:rBZYJk541a8SKzHPHnH3zbiI+7dagKZ0cgpgrD7Fyho=
 github.com/apache/pulsar-client-go v0.10.0 h1:ccwjmmaCjaE6bLYnrILpm8V4WQQ8rB3J98pOW0O2nyo=
 github.com/apache/pulsar-client-go v0.10.0/go.mod h1:l9ZNSafZdle1cpyFE5CkUL3uRYJMvoHjHHLlK0kL7c8=
+github.com/apache/pulsar-client-go v0.11.0 h1:fniyVbewAOcMSMLwxzhdrCFmFTorCW40jfnmQVcsrJw=
+github.com/apache/pulsar-client-go v0.11.0/go.mod h1:FoijqJwgjroSKptIWp1vvK1CXs8dXnQiL8I+MHOri4A=
 github.com/ardielle/ardielle-go v1.5.2 h1:TilHTpHIQJ27R1Tl/iITBzMwiUGSlVfiVhwDNGM3Zj4=
 github.com/ardielle/ardielle-go v1.5.2/go.mod h1:I4hy1n795cUhaVt/ojz83SNVCYIGsAFAONtv2Dr7HUI=
 github.com/ardielle/ardielle-tools v1.5.4/go.mod h1:oZN+JRMnqGiIhrzkRN9l26Cej9dEx4jeNG6A+AdkShk=

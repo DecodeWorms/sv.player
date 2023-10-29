@@ -77,7 +77,7 @@ func ImportConfig(c Config) *Config {
 	pulsarUrl := c.GetEnv(PulsarUrl, "pulsar://localhost:6650")
 	databasePassword := c.GetEnv("password", "")
 	serverprotocol := c.GetEnv(ServerProtocol, "tcp")
-	serverPort := c.GetEnv(ServerPort, "50051")
+	serverPort := c.GetEnv(ServerPort, "50052")
 
 	return &Config{
 		DatabaseName:         databaseName,
