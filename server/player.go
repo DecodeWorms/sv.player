@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math/rand"
 
+	"github.com/DecodeWorms/messaging-protocol/pulse"
 	"github.com/DecodeWorms/server-contract/models"
 	data "github.com/DecodeWorms/sv.player/db"
 	"github.com/DecodeWorms/sv.player/errorvalues"
@@ -16,11 +17,13 @@ type PlayerHandler struct {
 	playerService data.PlayerStore
 	player.UnimplementedPlayerServiceServer
 	//add the apache instance
+	pulStore *pulse.Message
 }
 
-func NewPlayerHandler(p data.PlayerStore) (PlayerHandler, error) {
+func NewPlayerHandler(p data.PlayerStore, pulStore *pulse.Message) (PlayerHandler, error) {
 	return PlayerHandler{
 		playerService: p,
+		pulStore:      pulStore,
 	}, nil
 }
 

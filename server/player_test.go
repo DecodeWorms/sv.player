@@ -28,7 +28,7 @@ func TestCreatePlayer(t *testing.T) {
 	storeMock.EXPECT().GetPlayerByEmail(gomock.Any()).Return(user, nil).Times(1)
 	storeMock.EXPECT().GetPlayerByPhoneNumber("09050095721").Return(user, nil).Times(1)
 	storeMock.EXPECT().CreatePlayer(gomock.Any()).Return(nil).Times(1)
-	handler, _ := NewPlayerHandler(storeMock)
+	handler, _ := NewPlayerHandler(storeMock, nil)
 	_, err := handler.CreatePlayer(context.Background(), &player.CreatePlayerRequest{
 		Id:            "test-id",
 		FirstName:     "John",
@@ -49,7 +49,7 @@ func TestDeletePlayer(t *testing.T) {
 	storemock := mocks.NewMockPlayerStore(ctrl)
 	storemock.EXPECT().DeletePlayer(id).Return(nil).Times(1)
 
-	handler, _ := NewPlayerHandler(storemock)
+	handler, _ := NewPlayerHandler(storemock, nil)
 	err := handler.playerService.DeletePlayer(id)
 	assert.Nil(t, err)
 }
@@ -79,7 +79,7 @@ func TestGetplayerById(t *testing.T) {
 	storemock := mocks.NewMockPlayerStore(ctrl)
 	storemock.EXPECT().GetPlayerById(gomock.Any()).Return(resp, nil).Times(1)
 	storemock.EXPECT().GetPlayerWithFieldsInfoById(gomock.Any()).Return(fieldInfo, nil).Times(1)
-	handler, _ := NewPlayerHandler(storemock)
+	handler, _ := NewPlayerHandler(storemock, nil)
 	res, err := handler.playerService.GetPlayerById("id")
 	assert.Nil(t, err)
 	assert.NotNil(t, res)
@@ -110,7 +110,7 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 	storemock := mocks.NewMockPlayerStore(ctrl)
 	storemock.EXPECT().GetPlayerByPhoneNumber(gomock.Any()).Return(resp, nil).Times(1)
 	storemock.EXPECT().GetPlayerWithFieldsInfoById(gomock.Any()).Return(fieldInfo, nil).Times(1)
-	handler, _ := NewPlayerHandler(storemock)
+	handler, _ := NewPlayerHandler(storemock, nil)
 	rest, err := handler.playerService.GetPlayerByPhoneNumber("test-123")
 	assert.Nil(t, err)
 	assert.NotNil(t, rest)
