@@ -13,6 +13,7 @@ import (
 
 func main() {
 	cfg := config.ImportConfig(config.Config{})
+	log.Printf("Starting the application with its dependencies at port : %s", cfg.ServerPort)
 	db, err := db.New(cfg.DatabaseHost, cfg.DatabaseUserName, cfg.DatabaseName, cfg.DatabasePort, cfg.DatabasePassword)
 	if err != nil {
 		log.Println(err)

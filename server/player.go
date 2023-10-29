@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"math/rand"
 
-	//pr "github.com/DecodeWorms/messaging-protocol"
 	"github.com/DecodeWorms/server-contract/models"
 	data "github.com/DecodeWorms/sv.player/db"
 	"github.com/DecodeWorms/sv.player/errorvalues"
@@ -16,6 +15,7 @@ import (
 type PlayerHandler struct {
 	playerService data.PlayerStore
 	player.UnimplementedPlayerServiceServer
+	//add the apache instance
 }
 
 func NewPlayerHandler(p data.PlayerStore) (PlayerHandler, error) {
