@@ -20,9 +20,9 @@ func main() {
 	}
 	pu, err := pr.NewMessage(cfg.PulsarUrl)
 	if err != nil {
-		log.Println(err)
 		return
 	}
+	log.Println("Connected to Pulsar successfully..")
 
 	add := fmt.Sprintf(":%s", cfg.ServerPort)
 

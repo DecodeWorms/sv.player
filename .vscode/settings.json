@@ -3,6 +3,7 @@
         "Derror",
         "errorvalues",
         "gomock",
+        "gorm",
         "pers",
         "proto",
         "protos",
