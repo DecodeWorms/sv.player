@@ -8,6 +8,7 @@ import (
 
 	"github.com/DecodeWorms/messaging-protocol/pulse"
 	"github.com/DecodeWorms/server-contract/models"
+	"github.com/DecodeWorms/sv.player/constants"
 	data "github.com/DecodeWorms/sv.player/db"
 	"github.com/DecodeWorms/sv.player/errorvalues"
 	"github.com/DecodeWorms/sv.player/pb/protos/pb/player"
@@ -42,7 +43,7 @@ func (p PlayerHandler) CreatePlayer(ctx context.Context, in *player.CreatePlayer
 		return nil, errorvalues.Format(errorvalues.PhoneNumberExistStatusCode)
 	}
 	data := models.PersonalInfo{
-		Id:            generatePlayerId(11),
+		Id:            generatePlayerId(constants.RandomNumberLength),
 		FirstName:     in.FirstName,
 		LastName:      in.LastName,
 		Gender:        in.Gender,
@@ -299,26 +300,3 @@ func generatePlayerId(length int) string {
 
 	return string(b)
 }
-
-/*query{
-	paginatedOrganization(input:{filter:"",Page:10,Limit:1}){
-   count
-    organization{
-      name
-      email
-      registration_number
-      social_profile
-    }
-  }
-  }
-
-  mutation{
-	login(input:{email:"amthetechguy@gmail.com",password:"harvest600"}){
-	  access_token
-	}
-  }
-
-  headers: {
-	Authorization: 'Bearer ' + token
-  }
-*/
