@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"math/rand"
 
 	"github.com/DecodeWorms/messaging-protocol/pulse"
@@ -11,6 +12,7 @@ import (
 	"github.com/DecodeWorms/sv.player/constants"
 	data "github.com/DecodeWorms/sv.player/db"
 	"github.com/DecodeWorms/sv.player/errorvalues"
+	"github.com/DecodeWorms/sv.player/model"
 	"github.com/DecodeWorms/sv.player/pb/protos/pb/player"
 )
 
@@ -42,7 +44,7 @@ func (p PlayerHandler) CreatePlayer(ctx context.Context, in *player.CreatePlayer
 	if err == nil {
 		return nil, errorvalues.Format(errorvalues.PhoneNumberExistStatusCode)
 	}
-	data := models.PersonalInfo{
+	data := &models.PersonalInfo{
 		Id:            generatePlayerId(constants.RandomNumberLength),
 		FirstName:     in.FirstName,
 		LastName:      in.LastName,
@@ -54,6 +56,18 @@ func (p PlayerHandler) CreatePlayer(ctx context.Context, in *player.CreatePlayer
 	if err := p.playerService.CreatePlayer(data); err != nil {
 		return nil, fmt.Errorf("error creating a player personal info %v", err)
 	}
+
+	pubData := model.Welcome{
+		FirstName: data.FirstName,
+		LastName:  data.LastName,
+		Email:     data.Email,
+	}
+	// Publish user info to the pulsar to send a welcome email to the user
+	if err = p.pulStore.Publisher(pubData, constants.WelcomeTopic); err != nil {
+		return nil, fmt.Errorf("error publishing player record into pulsar %v", err)
+	}
+	log.Println("Publishing player data was successful .")
+
 	return &player.Empty{}, nil
 }
 

@@ -16,7 +16,7 @@ const (
 	PulsarUrl            = "PULSAR_URL"
 	PulsarServiceName    = "PULSAR_SERVICE_NAME"
 	DatabasePassword     = "DATABASE_PASSWORD"
-	ServerProtocol       = "SERVER_NAME"
+	ServerProtocol       = "SERVER_NETWORK"
 	ServerPort           = "SERVER_PORT"
 )
 

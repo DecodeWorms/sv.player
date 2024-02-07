@@ -41,10 +41,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/DataDog/zstd v1.5.0 h1:+K/VEwIAaPcHiMtQvpLD4lqW7f0Gk3xdYZmI1hD+CXo=
 github.com/DataDog/zstd v1.5.0/go.mod h1:g4AWEaM3yOg3HYfnJ3YIawPnVdXJh9QME85blwSAmyw=
-github.com/DecodeWorms/messaging-protocol v0.0.0-20231029130038-17c9955ade54 h1:JfyQv3KDzQkBEoTO/J/DW8UsdYRzPH+4f/Dp3hEc19E=
-github.com/DecodeWorms/messaging-protocol v0.0.0-20231029130038-17c9955ade54/go.mod h1:OpUhVyB6bVJ8IQjUntkEMaEq03rWFnmE+JBFPSKHYn0=
-github.com/DecodeWorms/messaging-protocol v0.0.0-20231029143248-040003d36911 h1:uoXTx8iXZk/PkaP3zICzHt+IxApx5SAKthr5Rg0bdUk=
-github.com/DecodeWorms/messaging-protocol v0.0.0-20231029143248-040003d36911/go.mod h1:OpUhVyB6bVJ8IQjUntkEMaEq03rWFnmE+JBFPSKHYn0=
+github.com/DecodeWorms/messaging-protocol v0.0.0-20240111194742-63b33e711439 h1:c72OKkPJ7tMWT8h3i07of7qYzMZJm9NzRcVjjNtXHfU=
+github.com/DecodeWorms/messaging-protocol v0.0.0-20240111194742-63b33e711439/go.mod h1:OpUhVyB6bVJ8IQjUntkEMaEq03rWFnmE+JBFPSKHYn0=
 github.com/DecodeWorms/server-contract v0.0.0-20230802170240-da22fa029a19 h1:vNRE/VihC5CEQfKkgDE8mSJJvK5N/2wxmQVDh32YxL8=
 github.com/DecodeWorms/server-contract v0.0.0-20230802170240-da22fa029a19/go.mod h1:opat0sbueNw6ZtNIV6gXpnxhPEEPsfDHptJhP05GPw0=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
@@ -472,6 +470,8 @@ golang.org/x/tools v0.0.0-20200729194436-6467de6f59a7/go.mod h1:njjCfa9FT2d7l9Bc
 golang.org/x/tools v0.0.0-20200804011535-6c149bb5ef0d/go.mod h1:njjCfa9FT2d7l9Bc6FUM5FLjQPp3cFF28FI3qnDFljA=
 golang.org/x/tools v0.0.0-20200825202427-b303f430e36d/go.mod h1:njjCfa9FT2d7l9Bc6FUM5FLjQPp3cFF28FI3qnDFljA=
 golang.org/x/tools v0.1.1/go.mod h1:o0xws9oXOQQZyjljx8fwUC0k7L1pTE6eaCbjGeHmOkk=
+golang.org/x/tools v0.6.0 h1:BOw41kyTf3PuCW1pVQf8+Cyg8pMlkYB1oo9iJ6D/lKM=
+golang.org/x/tools v0.6.0/go.mod h1:Xwgl3UAJ/d3gWutnCtw505GrjyAbvKui8lOU390QaIU=
 golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=

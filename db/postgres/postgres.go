@@ -33,30 +33,32 @@ func New(host, user, name, port, password string) (*PostgresStore, error) {
 	}, nil
 }
 
-func (p PostgresStore) AutoMigratePersonalInfo() error {
+func (p *PostgresStore) AutoMigratePersonalInfo() error {
 	per := models.PersonalInfo{}
 	err := p.db.AutoMigrate(&per)
 	return err
 }
 
-func (p PostgresStore) AutoMigrateFieldInfo() error {
+func (p *PostgresStore) AutoMigrateFieldInfo() error {
 	field := models.FieldInfo{}
 	err := p.db.AutoMigrate(&field)
 	return err
 }
 
-func (p PostgresStore) AutoMigrateAddressInfo() error {
+func (p *PostgresStore) AutoMigrateAddressInfo() error {
 	add := models.Address{}
 	err := p.db.AutoMigrate(&add)
 	return err
 }
 
-func (p PostgresStore) AutoMigrateClubsPreviouslyPlazed() error {
+func (p *PostgresStore) AutoMigrateClubsPreviouslyPlazed() error {
 	clubs := models.ClubsHePreviouslyPlayed{}
 	err := p.db.AutoMigrate(&clubs)
 	return err
 }
-func (p PostgresStore) CreatePlayer(data models.PersonalInfo) error {
+
+// CreatePlayer implements db.DataStore.
+func (p *PostgresStore) CreatePlayer(data *models.PersonalInfo) error {
 	data.CreatedAt = time.Now()
 	err := p.db.Create(&models.PersonalInfo{
 		Id:            data.Id,
@@ -70,28 +72,32 @@ func (p PostgresStore) CreatePlayer(data models.PersonalInfo) error {
 	return err
 }
 
-func (p PostgresStore) GetPlayerById(id string) (*models.PersonalInfo, error) {
+func (p *PostgresStore) GetPlayerById(id string) (*models.PersonalInfo, error) {
 	player := models.PersonalInfo{}
 	err := p.db.Where("id = ?", id).First(&player).Error
 	return &player, err
 }
 
-func (p PostgresStore) GetPlayerByPhoneNumber(phoneNumber string) (*models.PersonalInfo, error) {
+func (p *PostgresStore) GetPlayerByPhoneNumber(phoneNumber string) (*models.PersonalInfo, error) {
 	player := models.PersonalInfo{}
 	err := p.db.Where("phone_number = ?", phoneNumber).First(&player).Error
 	return &player, err
 }
 
-func (p PostgresStore) UpdatePlayer(id string, data *models.PersonalInfo) error {
+func (p *PostgresStore) UpdatePlayer(id string, data *models.PersonalInfo) error {
 	data.UpdatedAt = time.Now()
 	var old = &models.PersonalInfo{}
-	_ = p.db.Where("id = ?", id).First(old).Error
+	if err := p.db.Where("id = ?", id).First(old).Error; err != nil {
+		return err
+	}
 	d := buildPlayerPayload(old, data)
-	err := p.db.Model(&models.PersonalInfo{}).Where("id = ?", id).Updates(d).Error
-	return err
+	if err := p.db.Model(&models.PersonalInfo{}).Where("id = ?", id).Updates(d).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
-func (p PostgresStore) CreatePlayerWithFieldsData(data models.FieldInfo) error {
+func (p *PostgresStore) CreatePlayerWithFieldsData(data models.FieldInfo) error {
 	data.CreatedAt = time.Now()
 	data.UpdatedAt = time.Now()
 
@@ -107,14 +113,14 @@ func (p PostgresStore) CreatePlayerWithFieldsData(data models.FieldInfo) error {
 	return err
 }
 
-func (p PostgresStore) GetPlayer(jerseyNumber string) (*models.FieldInfo, error) {
+func (p *PostgresStore) GetPlayer(jerseyNumber string) (*models.FieldInfo, error) {
 	var player = &models.FieldInfo{}
 	err := p.db.Where("jersey_number = ?", jerseyNumber).First(player).Error
 	return player, err
 
 }
 
-func (p PostgresStore) UpdatePlayerWithFieldsInfo(id string, data *models.FieldInfo) error {
+func (p *PostgresStore) UpdatePlayerWithFieldsInfo(id string, data *models.FieldInfo) error {
 	data.UpdatedAt = time.Now()
 
 	var old = &models.FieldInfo{}
@@ -123,20 +129,20 @@ func (p PostgresStore) UpdatePlayerWithFieldsInfo(id string, data *models.FieldI
 	err := p.db.Model(&models.FieldInfo{}).Where("personal_info_id = ?", id).Updates(d).Error
 	return err
 }
-func (p PostgresStore) GetPlayerWithFieldsInfoById(id string) (*models.FieldInfo, error) {
+func (p *PostgresStore) GetPlayerWithFieldsInfoById(id string) (*models.FieldInfo, error) {
 	var playerWithField = &models.FieldInfo{}
 	err := p.db.Where("personal_info_id = ?", id).First(playerWithField).Error
 	return playerWithField, err
 
 }
 
-func (p PostgresStore) DeletePlayer(id string) error {
+func (p *PostgresStore) DeletePlayer(id string) error {
 	player := models.PersonalInfo{}
 	err := p.db.Where("id = ?", id).Find(&player).Delete(&models.PersonalInfo{}).Error
 	return err
 }
 
-func (p PostgresStore) CreateAddress(data *models.Address) error {
+func (p *PostgresStore) CreateAddress(data *models.Address) error {
 	data.CreatedAt = time.Now()
 	data.UpdatedAt = time.Now()
 
@@ -148,7 +154,7 @@ func (p PostgresStore) CreateAddress(data *models.Address) error {
 	}).Error
 }
 
-func (p PostgresStore) UpdateAddress(id string, data *models.Address) error {
+func (p *PostgresStore) UpdateAddress(id string, data *models.Address) error {
 	data.UpdatedAt = time.Now()
 	return p.db.Where("personal_info_id = ?", id).Updates(&models.Address{
 		Name:    data.Name,
@@ -157,26 +163,26 @@ func (p PostgresStore) UpdateAddress(id string, data *models.Address) error {
 	}).Error
 }
 
-func (p PostgresStore) GetPlayerByJerseyNumber(jerseyNumber string) (*models.FieldInfo, error) {
+func (p *PostgresStore) GetPlayerByJerseyNumber(jerseyNumber string) (*models.FieldInfo, error) {
 	data := &models.FieldInfo{}
 	return data, p.db.Where("jersey_number = ?", jerseyNumber).First(data).Error
 }
 
-func (p PostgresStore) DeletePlayerFieldInfo(id string) error {
+func (p *PostgresStore) DeletePlayerFieldInfo(id string) error {
 	data := &models.FieldInfo{}
 	return p.db.Where("personal_info_id = ?", id).First(data).Delete(data).Error
 }
-func (p PostgresStore) DeletePlayerAddress(id string) error {
+func (p *PostgresStore) DeletePlayerAddress(id string) error {
 	return p.db.Where("personal_info_id = ?", id).First(&models.Address{}).Delete(&models.Address{}).Error
 }
 
-func (p PostgresStore) GetAddressById(id string) (*models.Address, error) {
+func (p *PostgresStore) GetAddressById(id string) (*models.Address, error) {
 	var add = &models.Address{}
 	err := p.db.Where("personal_info_id = ?", id).First(add).Error
 	return add, err
 }
 
-func (p PostgresStore) GetPlayerByEmail(email string) (*models.PersonalInfo, error) {
+func (p *PostgresStore) GetPlayerByEmail(email string) (*models.PersonalInfo, error) {
 	var player = &models.PersonalInfo{}
 	return player, p.db.Where("email = ?", email).First(player).Error
 }
