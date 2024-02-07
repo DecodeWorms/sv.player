@@ -3,8 +3,6 @@ package db
 import "github.com/DecodeWorms/server-contract/models"
 
 // DataStore interface
-//
-//go:generate mockgen -source=datastore.go -destination=../mocks/datastore_mock.go -package=mocks
 type DataStore interface {
 	PlayerStore
 }
@@ -13,7 +11,7 @@ type PlayerStore interface {
 	AutoMigrateFieldInfo() error
 	AutoMigrateAddressInfo() error
 	AutoMigrateClubsPreviouslyPlazed() error
-	CreatePlayer(data models.PersonalInfo) error
+	CreatePlayer(data *models.PersonalInfo) error
 	GetPlayerById(id string) (*models.PersonalInfo, error)
 	GetPlayerByPhoneNumber(phoneNumber string) (*models.PersonalInfo, error)
 	UpdatePlayer(id string, data *models.PersonalInfo) error
@@ -28,5 +26,5 @@ type PlayerStore interface {
 	DeletePlayerFieldInfo(id string) error
 	DeletePlayerAddress(id string) error
 	GetAddressById(id string) (*models.Address, error)
-	GetPlayerByEmail(email string)(*models.PersonalInfo, error)
+	GetPlayerByEmail(email string) (*models.PersonalInfo, error)
 }

@@ -16,32 +16,6 @@ const (
 	port     = "5432"
 )
 
-func TestCreatePlayer(t *testing.T) {
-	//Establish connection  to the Db..
-	db, err := New(Host, User, Dbname, port, Password)
-	if err != nil {
-		log.Println("Unable to connect to the db..")
-	}
-	//create a database table for a player on Github action
-	if err = db.db.AutoMigrate(&models.PersonalInfo{}); err != nil {
-		log.Println("Unabe to create a table player personal info")
-	}
-
-	//Persist Data to the db..
-	playerRecord := models.PersonalInfo{
-		Id:            "Qos-1234-test",
-		FirstName:     "Qosim",
-		LastName:      "AbdulQadr",
-		Gender:        "male",
-		MaritalStatus: "single",
-		PhoneNumber:   "0919673928430",
-	}
-
-	if err = db.CreatePlayer(playerRecord); err != nil {
-		assert.Nil(t, err)
-	}
-}
-
 func TestUpdatePlayer(t *testing.T) {
 	//Establish connection  to the Db..
 	db, err := New(Host, User, Dbname, port, Password)

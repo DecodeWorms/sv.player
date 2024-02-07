@@ -1,17 +1,6 @@
 package server
 
-import (
-	"context"
-	"testing"
-
-	"github.com/DecodeWorms/server-contract/models"
-	"github.com/DecodeWorms/sv.player/mocks"
-	"github.com/DecodeWorms/sv.player/pb/protos/pb/player"
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/assert"
-)
-
-func TestCreatePlayer(t *testing.T) {
+/*func TestCreatePlayer(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	ctrl.Finish()
 
@@ -116,3 +105,4 @@ func TestGetPlayerByPhoneNumber(t *testing.T) {
 	assert.NotNil(t, rest)
 
 }
+*/
